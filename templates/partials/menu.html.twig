@@ -1,0 +1,55 @@
+    <nav class="menu-nav">
+        <!--logo-->
+        <a href="/" class="logo">
+            <img src="{{ asset('assets/img/logo-pergolazur-nav.png') }}" alt="" />
+        </a>
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-info" style="color: orange; font-weight: bold;" >{{ message }}</div>
+        {% endfor %}
+        {# <p style="color:white;">test</p> #}
+        <!--menu-btn-->
+        <input class="menu-btn" type="checkbox" id="menu-btn"/>
+        <label class="menu-icon" for="menu-btn">
+            <span class="nav-icon"></span>
+        </label>
+        <!--menu-->
+        <ul class="menu">
+            <li><a href="/">Accueil</a></li>
+            <li><a href="#">Produits <span><i class="fas fa-chevron-down"> </i></a>
+                <div class="dropdown-menu-right">
+                    <!--sub-menu-->
+                    <ul class="sous-menu-nom">
+                        <li><a href="/nos-produits">Nos Produits</a></li>
+                        {% for item in categories %}
+                            <li><a href="/nos-produits/categorie-{{ item.id }}">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>	
+                </div>
+            </li>
+
+            <li><a href="/#contact">Contact</a></li>
+
+            <li><a href="#"><i class="far fa-user bouton-header"></i><i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu-right">
+                    <!--sub-menu-->	
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <ul class="sous-menu-nom">
+                        <li><a href="/admin">Admin</a></li>
+                        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    </ul>
+                    {% elseif is_granted('ROLE_USER') %}
+                    <ul class="sous-menu-nom">
+                        <li><a href="/">Compte</a></li>
+                        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    </ul>
+                    {% else %}
+                    <ul class="sous-menu-nom">
+                        <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                        <li><a href="{{ path('register') }}">Inscription</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </li>
+
+        </ul>
+    </nav>

@@ -1,0 +1,32 @@
+    <section class="slider" id-"slider">
+      <div class="container">
+        <h3 class="text-center">Nouveautés</h3>
+        <p class="text-center">Découvrez nos derniers articles</p>
+        <ul id="autoWidth" class="cs-hidden">
+        <!-- n°1 -->{% for item in products %}
+          <li class="item-a">
+            <!-- box-slider -->
+              <div class="box">
+                <!-- img-box -->
+                <div class="slide-img">
+                  <img src="/uploads/{{ item.image }}" alt="produits isBest"/>
+                  <!-- overlayer -->
+                    <div class="overlay">
+                      <!-- buy-btn -->
+                      <a href="{{ path('produit', { 'slug' : item.slug } ) }}" class="buy-btn">Voir</a>
+                    </div>
+                </div>
+                <!-- detail-box -->
+                <div class="detail-box">
+                  <!-- type -->
+                  <div class="type">
+                    <a href="{{ path('produit', { 'slug' : item.slug } ) }}">{{ item.name }}</a>
+                    <span>{{ item.category }}</span>
+                  </div>
+                  <a href="{{ path('produit', { 'slug' : item.slug } ) }}" class="buy-btn">Voir</a>
+                </div>
+              </div>
+          </li>{% endfor %}
+        </ul>
+      </div>
+    </section>
