@@ -29,7 +29,7 @@
 
             <li><a href="/#contact">Contact</a></li>
 
-            <li>
+            {# <li>
                 {% block widget %}
                 <a id="cartdetails" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" href="{{ path('cart') }}">
@@ -44,19 +44,18 @@
                             <div class="w-100">
                                 <div class="row">   
                                     <div class="col-md-12">
-                                        <a href="{{ path('product', { 'slug' : item.product.slug } ) }}" class="navbar-cart-product-link">
-                                            {# {{ dump(item.product) }} #} {# {{ item.product.name }} #} {# - {{ item.product.size.name }} #}</br>
+                                        <a href="{{ path('product', { 'slug' : item.product.slug } ) }}" class="navbar-cart-product-link"></br>
                                         </a>    
                                     </div>
                                     <div class="col-md-6 my-auto">
                                         <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px">
                                     </div>
                                     <div class="col-md-6">
-                                        {# {% for element in cart.full %} #}
+                                        {% for element in cart.full %}
                                             <small 
                                                 class="d-block text-sm">Taille : <strong>{{ item.product.size.name }}</strong>
                                             </small>
-                                        {# {% endfor %} #}                                            
+                                        {% endfor %}                                            
                                         <small 
                                             class="d-block text-sm">Prix unité : <strong>{{ (item.product.price / 100)|number_format(2, ',','.') }} € </strong>
                                         </small>
@@ -92,7 +91,7 @@
                         </div>
                     </div>
                 {% endblock %}
-            </li>
+            </li> #}
 
             <li><a href="#"><i class="far fa-user bouton-header"></i><i class="fas fa-chevron-down"></i></a>
                 <div class="dropdown-menu-right">
