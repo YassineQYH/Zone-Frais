@@ -65,16 +65,9 @@
 
 
                 {% for item in products|slice(0,1) %}
-                    <video src="/uploads/{{ item.category.illustration }}"  controls poster="#" autoplay="true"></video> 
+                    <img src="/uploads/{{ item.category.illustration }}" style="width:600px;" {# style="height:400px" #}></img> 
                 {% endfor %}
 
-
-                {# {% for item in categories|slice(0,1) %}
-                    <video src="/uploads/{{ item.illustration }}"  controls poster="#" autoplay="true"></video>
-                {% endfor %} #}
-
-                {# <video src="{{ asset('assets/videos/pergo-bio_trim.mp4') }}"  controls poster="#" autoplay="true"></video> #}
-                
                 </div>
             </div>
         </section>
