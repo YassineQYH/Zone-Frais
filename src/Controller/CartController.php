@@ -37,7 +37,7 @@ class CartController extends AbstractController
     {   
         //dd($request->request);
         // $notification = 'Votre produit à bien été ajouté au panier';
-        $cart->add($request->request->get('id_declination'));
+        $cart->add($request->request->get('id_product'));
         
         // return $this->redirectToRoute('cart');
         //dd($_SERVER['HTTP_REFERER']);

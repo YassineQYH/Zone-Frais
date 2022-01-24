@@ -72,33 +72,22 @@ class Cart
         $cartComplete = [];
 
         if ($this->get()) {
-            //dd($this->get());
             foreach ($this->get() as $id => $quantity) {
 
-                $product = $this->entityManager->getRepository(product::class)->find($id);
-                $product_object = !empty($product) ? $product->getProduct()  : null;
-                // $product = $this->entityManager->getRepository(product::class)->findOneBy([
-                //     'product' => $product_object,
-                //     'size' =>  8
-                // ]);
-                //dd($product)->getName()->getSize();
+                $product_object = $this->entityManager->getRepository(Product::class)->findOneById($id);
+
                 // Pour supprimer un produit qui n'existe pas si l'utilise fait /cart/add/xxx
                 if (!$product_object) {
-                    $this->delete($id);
-                    continue;
-                }
-                if (!$product) {
                     $this->delete($id);
                     continue;
                 }
 
                 $cartComplete[] = [
                     'product' => $product_object,
-                    'quantity' => $quantity,
-                    'product' => $product
+                    'quantity' => $quantity
                 ];
             }
-        }/* dump($cartComplete); */
+        }
         return $cartComplete;
     }
 }
