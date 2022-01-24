@@ -35,6 +35,17 @@
                 {% endblock %}
             </li>
 
+            {# <li>
+                <a href="#">€ :
+                {% for item in cart %}
+                    <small >
+                        Prix total :  <strong>{{ ((item.product.price * item.quantity) / 100)|number_format(2, ',','.') }} € </strong>
+                    </small>
+                {% endfor %} 
+                </a>
+            </li> #}
+                
+
             <li><a href="#"><i class="far fa-user bouton-header"></i><i class="fas fa-chevron-down"></i></a>
                 <div class="dropdown-menu-right">
                     <!--sub-menu-->	

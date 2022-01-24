@@ -41,12 +41,12 @@ class CartController extends AbstractController
     {   
         //dd($request->request);
         // $notification = 'Votre produit à bien été ajouté au panier';
-        $cart->add($request->request->get('id_product'));
+        $cart->add($id);
         
         // return $this->redirectToRoute('cart');
         //dd($_SERVER['HTTP_REFERER']);
         //return $this->redirectToRoute('add_to_cart', ['id' => 17 ]);
-        return $this->redirect($this->generateUrl('product', array('slug' => $product->getSlug())));
+        return $this->redirect($this->generateUrl('produit', array('slug' => $product->getSlug())));
 
 //return $this->redirectToRoute(['add_to_cart' : ]);
         // return $notification;

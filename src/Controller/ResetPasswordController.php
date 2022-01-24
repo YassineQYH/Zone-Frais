@@ -6,6 +6,7 @@ use App\Classe\Mail;
 use App\Entity\ResetPassword;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
+use App\Repository\CategoryRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,8 +66,10 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/modifier-mon-mot-de-passe/{token}", name="update_password")
      */
-    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder)
+    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
     {
+        $categories = $category->findAll();
+
         $reset_password = $this->entityManager->getRepository(ResetPassword::class)->findOneByToken($token);
 
         if (!$reset_password) {
@@ -102,7 +105,8 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/update.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'categories' => $categories
         ]);
     }
 }

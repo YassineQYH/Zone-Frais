@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ChangePasswordType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +22,10 @@ class AccountPasswordController extends AbstractController
     /**
      * @Route("/compte/modifier-mon-mot-de-passe", name="account_password")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
     {
+        $categories = $category->findAll();
+
         $notification = null;
 
         $user = $this->getUser();
@@ -48,7 +51,8 @@ class AccountPasswordController extends AbstractController
 
         return $this->render('account/password.html.twig', [
             'form' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'categories' => $categories
         ]);
     }
 }

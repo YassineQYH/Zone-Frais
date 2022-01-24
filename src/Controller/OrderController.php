@@ -7,6 +7,7 @@ use App\Classe\Cart;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Entity\OrderDetails;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,8 +26,10 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande", name="order")
      */
-    public function index(Cart $cart, Request $request)
+    public function index(Cart $cart, Request $request, CategoryRepository $category)
     {
+        $categories = $category->findAll();
+
         if (!$this->getUser()->getAddresses()->getValues())
         {
             return $this->redirectToRoute('account_address_add');
@@ -38,7 +41,8 @@ class OrderController extends AbstractController
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
-            'cart' => $cart->getFull()
+            'cart' => $cart->getFull(),
+            'categories' => $categories
         ]);
     }
 

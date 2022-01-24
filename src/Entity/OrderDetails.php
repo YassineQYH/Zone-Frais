@@ -46,11 +46,11 @@ class OrderDetails
     /**
      * @ORM\Column(type="string", length=64)
      */
-    private $size;
+    private $weight;
 
     public function __toString()
     {
-        return $this->getProduct().' x'.$this->getQuantity().' - Taille '.$this->getSize();
+        return $this->getProduct().' x'.$this->getQuantity().' - Taille '.$this->getWeight();
     }
 
     public function getId(): ?int
@@ -118,14 +118,14 @@ class OrderDetails
         return $this;
     }
 
-    public function getSize(): ?string
+    public function getWeight(): ?string
     {
-        return $this->size;
+        return $this->weight;
     }
 
-    public function setSize(string $size): self
+    public function setWeight(string $weight): self
     {
-        $this->size = $size;
+        $this->weight = $weight;
 
         return $this;
     }

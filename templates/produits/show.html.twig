@@ -79,28 +79,49 @@
             </button>
           </div>
 
-      <div>
-        <div class="glide">
-          <div class="glide__track" data-glide-el="track">
-            {# <ul class="glide__slides">
-              <li class="glide__slide"> #}
+          <div>
+            <div class="glide">
+              <div class="glide__track" data-glide-el="track">
+                {# <ul class="glide__slides">
+                  <li class="glide__slide"> #}
 
-                <div id="autoWidth" class="cs-hidden" class="glide__bullets" data-glide-el="controls[nav]" {# class="glide__slides" #}>
-                  {% for key, item in illustrations %}
-                  {% set counter = ( counter | default(-1) ) + 1 %}
-                    <button class="glide__bullet" data-glide-dir="={{ counter }}" {# class="glide__slide" #}>
-                      <div class="thumbnail">
-                        <img src="/uploads/{{ item.image }}" alt=""/>
-                      </div>
-                    </button>
-                  {% endfor %}
-                </div>
+                    <div id="autoWidth" class="cs-hidden" class="glide__bullets" data-glide-el="controls[nav]" {# class="glide__slides" #}>
+                      {% for key, item in illustrations %}
+                      {% set counter = ( counter | default(-1) ) + 1 %}
+                        <button class="glide__bullet" data-glide-dir="={{ counter }}" {# class="glide__slide" #}>
+                          <div class="thumbnail">
+                            <img src="/uploads/{{ item.image }}" alt=""/>
+                          </div>
+                        </button>
+                      {% endfor %}
+                    </div>
 
-              {# </li>
-            </ul> #}
+                  {# </li>
+                </ul> #}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+
+          <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
+            <div>
+              <select name="id_declination">
+                <option value="Select Size" selected disabled>Sélectionner la taille</option>
+                {# {% for element in product %}
+                  {% if (element.stock > 0) %}
+                    <option value="{{ element.product }}">{{ element.weight }}</option>
+                  {% endif %}
+                  {% if (element.stock <= 0) %}
+                    <option class="stock-indisponible"disabled>{{ element.weight }} : Indisponible</option>
+                  {% endif %}
+                {% endfor %} #}
+              </select>
+              <span><i class='bx bx-chevron-down'></i></span>
+            </div>
+            <input type="submit" class="addCart" value="Ajouter"/>
+          </form>
+
+          {# {% for item in cart.full %}<input type="text" placeholder="{{ item.quantity }}">{% endfor %} #}
+          {# <a href="{{ path('add_to_cart', {'id' : product.id }) }}" type="submit" class="addCart">Ajouter</a> #}
 
         </div>
       </div>

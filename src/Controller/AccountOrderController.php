@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,20 +21,24 @@ class AccountOrderController extends AbstractController
     /**
      * @Route("/compte/mes-commandes", name="account_order")
      */
-    public function index()
+    public function index(CategoryRepository $category)
     {
+        $categories = $category->findAll();
+
         $orders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($this->getUser());
 
         return $this->render('account/order.html.twig', [
-            'orders' => $orders
+            'orders' => $orders,
+            'categories' => $categories
         ]);
     }
 
     /**
      * @Route("/compte/mes-commandes/{reference}", name="account_order_show")
      */
-    public function show($reference)
+    public function show($reference, CategoryRepository $category)
     {
+        $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByReference($reference);
 
         if(!$order || $order->getUser() != $this->getUser()) {
@@ -41,7 +46,8 @@ class AccountOrderController extends AbstractController
         }
 
         return $this->render('account/order_show.html.twig', [
-            'order' => $order
+            'order' => $order,
+            'categories' => $categories
         ]);
     }
 }
