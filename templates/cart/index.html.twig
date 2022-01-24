@@ -1,6 +1,5 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Mon panier : SY-Shop{% endblock %}
+{% block title %}Mon panier{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -24,12 +23,12 @@
                         {% for item in cart %}
                             {# {{ dump(product) }} #}
                             <tr>
-                                <th>
+                                {# <th>
                                     <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px"></br>
-                                </th>
+                                </th> #}
                                 <td>
-                                {{ item.product.name }} - {{ item.productDeclination.size.name }}</br>
-                                <small>{{ item.product.subtitle }}</small>
+                                {{ item.product.name }} - {# {{ item.product.weight.nakgme }} #}</br>
+                                <small>{{ item.product.description }}</small>
                                 </td>
                                 <td>
                                     <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}">
@@ -61,7 +60,4 @@
             <p><b>Votre panier est vide.</b></p>
             {% endif %}
     </div>
-{% endblock %}
-
-{% block widget %}
 {% endblock %}
