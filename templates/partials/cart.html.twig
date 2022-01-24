@@ -5,7 +5,8 @@
 <div aria-labelledby="cartdetails" class="dropdown-menu dropdown-menu-left p-4" style="margin-top:13px!important;">
     <div class="navbar-cart-product-wrapper">
         {% set total = null %}
-        {% for item in cart.full %}
+        {# {% for item in cart.full %} #}
+        {% for item in cart %}
         
         <div class="navbar-cart-product">
             <div class="w-100">

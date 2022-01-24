@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Product;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,13 @@ class CartController extends AbstractController
     /**
      * @Route("/mon-panier", name="cart")
      */
-    public function index(Cart $cart)
+    public function index(Cart $cart, CategoryRepository $category)
     {
+        $categories = $category->findAll();
+
         return $this->render('cart/index.html.twig', [
-            'cart' => $cart->getFull()
+            'cart' => $cart->getFull(),
+            'categories' => $categories
         ]);
     }
 

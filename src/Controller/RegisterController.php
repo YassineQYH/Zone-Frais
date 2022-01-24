@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +24,11 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
     {
         $notification = null;
+
+        $categories = $category->findAll();
 
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
@@ -60,7 +63,8 @@ class RegisterController extends AbstractController
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'categories' => $categories
         ]);
     }
 }

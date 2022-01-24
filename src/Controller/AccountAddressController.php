@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classe\Cart;
 use App\Entity\Address;
 use App\Form\AddressType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,13 @@ class AccountAddressController extends AbstractController
     /**
      * @Route("/compte/adresses", name="account_address")
      */
-    public function index()
+    public function index(CategoryRepository $category)
     {
+        $categories = $category->findAll();
         //dd($this->getUser());
-        return $this->render('account/address.html.twig');
+        return $this->render('account/address.html.twig', [
+            'categories' => $categories
+        ]);
     }
 
     /**
