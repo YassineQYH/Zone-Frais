@@ -1,6 +1,10 @@
+{% extends 'base.html.twig' %}
 
+{% block title %}Valider ma commande : Zone frais{% endblock %}
 
-{% block title %}Valider ma commande : SY-Shop{% endblock %}
+{% block menu %}
+    {{ include('partials/menu2.html.twig') }}
+{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -29,11 +33,11 @@
                     {% for key,item in cart %}{# key => pour être en mesure de compter #}
                         <div class="row {% if key> 0 %}mt-2{% endif %}">
                             <div class="col-4">
-                                <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px"></br>
+                                <img src="/uploads/{{ item.product.image }}" alt="{{ item.product.name }}" height="75px"></br>
                             </div>
                             <div class="col-8 my-auto">
-                                {{ item.productDeclination.product }} - {{ item.productDeclination.size.name }}</br>
-                                <small>{{ item.product.subtitle }}</small>
+                                {{ item.product.name }} -{#  {{ item.product.weight.kg }} #}</br>
+                                <small>{{ item.product.description }}</small>
                             </div>
                             <div class="col-2 my-auto">
                                 x {{ item.quantity }}
@@ -44,6 +48,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block widget %}
 {% endblock %}

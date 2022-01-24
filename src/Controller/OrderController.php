@@ -96,13 +96,14 @@ class OrderController extends AbstractController
                     //dd($product["quantity"]);
                     //dd($product['productDeclination']->getProduct());
                     //dd($product['productDeclination']->getSize()->getName());
+                    /* dd($product['product']->getWeight()->getKg()); */
                     $orderDetails = new OrderDetails();
                     $orderDetails->setMyOrder($order);
-                    $orderDetails->setProduct($element['productDeclination']->getProduct());
+                    $orderDetails->setProduct($element['product']->getName());
                     $orderDetails->setQuantity($element['quantity']);
                     $orderDetails->setPrice($element['product']->getPrice());
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
-                    $orderDetails->setSize($element['productDeclination']->getSize()->getName());
+                    /* $orderDetails->setWeight($element['product']->getWeight()->getKg()); */
 
                     // PREPARATION DU STOCKAGE AUTOMATIQUE APRES COMMANDE
                     // $orderedList[]=[

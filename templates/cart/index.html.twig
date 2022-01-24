@@ -1,5 +1,10 @@
-
+{% extends 'base.html.twig' %}
 {% block title %}Mon panier{% endblock %}
+
+{% block menu %}
+    {{ include('partials/menu2.html.twig') }}
+{% endblock %}
+
 
 {% block content %}
     <div class="container">
