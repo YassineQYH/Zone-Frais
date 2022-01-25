@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% set total = null %}
+                    {% set prix_total_article = null %}
                     {% set poid_total = null %}
                     {% set prix_total_poid = null %}
                         {% for item in cart %}
@@ -55,17 +55,25 @@
                                     <img src="{{ asset('assets/img/delete.png') }}" height="18px" alt="Supprimer"></td>
                                 </a>
                             </tr>
-                            {% set total = total + (item.product.price * item.quantity) %}
+                            {# PRIX TOTAL DES ARTICLES #}
+                            {% set prix_total_article = prix_total_article + (item.product.price * item.quantity) %}
+                            {# POIDS TOTAL DES ARTICLES #}
                             {% set poid_total = poid_total + (item.product.weight.kg * item.quantity) %}
-                            {% set prix_total_poid = prix_total_poid + (item.product.weight.price) %}
+                            {# PRIX DE LIVRAISON #}
+                            {% set prix_total_poid = (item.weight.price) %}
+                            {{ dump(item.weight.kg) }}{{ dump(item.weight.price) }}
+                            
+                            {# {% set pp = 0 + (poid_total) %}
+                            {% set pp = (item.weight.price) %}
+                            {% set oo = ii = (item.weight.price) %} #}
                         {% endfor %}
                     </tbody>
                 </table>
                 <div class="text-right mb-5">
                     <b>Nombre de produits :</b> {{ cart|length }}</br>
-                    <b>Prix de mon panier :</b> {{ (total / 100)|number_format(2, ',','.') }} € </br>
+                    <b>Prix de mon panier :</b> {{ (prix_total_article / 100)|number_format(2, ',','.') }} € </br>
                     <b>Prix livraison :</b> {{ (poid_total)|number_format(2, ',','.') }} kg = {{ (prix_total_poid)|number_format(2, ',','.') }} € </br>
-                    <b>Prix Toal :</b> {{ ((total / 100 )+ poid_total)|number_format(2, ',','.') }} € 
+                    <b>Prix Total :</b> {{ ((prix_total_article / 100 ) + prix_total_poid)|number_format(2, ',','.') }} € 
                     <a href="{{ path('order') }}" class="btn btn-success btn-block">Valider mon panier</a>
                 </div>
             {% else %}
