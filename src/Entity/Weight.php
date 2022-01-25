@@ -20,7 +20,7 @@ class Weight
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float")
      */
     private $kg;
 
@@ -30,7 +30,7 @@ class Weight
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="weight")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="weight")
      */
     private $products;
 
@@ -48,12 +48,12 @@ class Weight
         return $this->id;
     }
 
-    public function getKg(): ?string
+    public function getKg(): ?float
     {
         return $this->kg;
     }
 
-    public function setKg(?string $kg): self
+    public function setKg(float $kg): self
     {
         $this->kg = $kg;
 

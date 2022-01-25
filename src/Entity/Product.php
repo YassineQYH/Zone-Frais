@@ -41,7 +41,7 @@ class Product
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Weight::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=Weight::class, inversedBy="products")
      */
     private $weight;
 
@@ -67,7 +67,6 @@ class Product
 
     public function __construct()
     {
-        $this->weight = new ArrayCollection();
         $this->illustration = new ArrayCollection();
     }
     
@@ -115,19 +114,31 @@ class Product
 
         return $this;
     }
-
-    public function getPrice(): ?float
+    
+    public function getImage(): ?string
     {
-        return $this->price;
+        return $this->image;
     }
 
-    public function setPrice(float $price): self
+    public function setImage(string $image): self
     {
-        $this->price = $price;
+        $this->image = $image;
 
         return $this;
     }
-    
+
+    public function getIsBest(): ?bool
+    {
+        return $this->isBest;
+    }
+
+    public function setIsBest(bool $isBest): self
+    {
+        $this->isBest = $isBest;
+
+        return $this;
+    }
+
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -140,26 +151,26 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Weight[]
-     */
-    public function getWeight(): Collection
+    public function getWeight(): ?Weight
     {
         return $this->weight;
     }
 
-    public function addWeight(Weight $weight): self
+    public function setWeight(?Weight $weight): self
     {
-        if (!$this->weight->contains($weight)) {
-            $this->weight[] = $weight;
-        }
+        $this->weight = $weight;
 
         return $this;
     }
 
-    public function removeWeight(Weight $weight): self
+    public function getPrice(): ?float
     {
-        $this->weight->removeElement($weight);
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
@@ -194,27 +205,4 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getIsBest(): ?bool
-    {
-        return $this->isBest;
-    }
-
-    public function setIsBest(bool $isBest): self
-    {
-        $this->isBest = $isBest;
-
-        return $this;
-    }
 }

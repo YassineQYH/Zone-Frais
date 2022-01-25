@@ -3,6 +3,7 @@
 namespace App\Classe;
 
 use App\Entity\Product;
+use App\Entity\Weight;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -75,6 +76,7 @@ class Cart
             foreach ($this->get() as $id => $quantity) {
 
                 $product_object = $this->entityManager->getRepository(Product::class)->findOneById($id);
+                $weight = $this->entityManager->getRepository(Weight::class)->findOneById($id);
 
                 // Pour supprimer un produit qui n'existe pas si l'utilise fait /cart/add/xxx
                 if (!$product_object) {
@@ -84,7 +86,8 @@ class Cart
 
                 $cartComplete[] = [
                     'product' => $product_object,
-                    'quantity' => $quantity
+                    'quantity' => $quantity,
+                    'weight' => $weight
                 ];
             }
         }
