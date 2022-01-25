@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 25 jan. 2022 à 17:25
+-- Généré le : mar. 25 jan. 2022 à 23:50
 -- Version du serveur : 10.4.20-MariaDB
--- Version de PHP : 8.0.9
+-- Version de PHP : 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -272,15 +272,39 @@ CREATE TABLE `weight` (
 --
 
 INSERT INTO `weight` (`id`, `kg`, `price`) VALUES
-(1, 0.25, 4.95),
-(2, 0.5, 6.55),
-(3, 0.745, 7.45),
-(4, 1, 8.1),
-(5, 2, 9.35),
-(6, 5, 14.35),
-(7, 10, 20.85),
-(8, 15, 26.4),
-(9, 30, 32.7);
+(1, 0.25, 5.96),
+(2, 0.5, 6.71),
+(3, 0.75, 7.5),
+(4, 1, 8.14),
+(5, 2, 9.13),
+(6, 3, 10.01),
+(7, 4, 10.92),
+(8, 5, 11.8),
+(9, 6, 12.35),
+(18, 7, 13.21),
+(19, 8, 14.07),
+(20, 9, 14.96),
+(21, 10, 15.83),
+(22, 11, 16.38),
+(23, 12, 17.23),
+(24, 13, 18.08),
+(25, 14, 18.95),
+(26, 15, 19.8),
+(27, 16, 20.65),
+(28, 17, 21.5),
+(29, 18, 22.35),
+(30, 19, 23.22),
+(31, 20, 24.06),
+(32, 21, 24.68),
+(33, 22, 25.52),
+(34, 23, 26.37),
+(35, 24, 27.22),
+(36, 25, 28.05),
+(37, 26, 28.91),
+(38, 27, 29.75),
+(39, 28, 30.6),
+(40, 29, 31.46),
+(41, 30, 32.28);
 
 --
 -- Index pour les tables déchargées
@@ -434,7 +458,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `weight`
 --
 ALTER TABLE `weight`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Contraintes pour les tables déchargées

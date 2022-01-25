@@ -60,9 +60,9 @@
                             {# POIDS TOTAL DES ARTICLES #}
                             {% set poid_total = poid_total + (item.product.weight.kg * item.quantity) %}
                             {# PRIX DE LIVRAISON #}
-                            {% set prix_total_poid = (item.weight.price) %}
-                            {{ dump(item.weight.kg) }}{{ dump(item.weight.price) }}
-                            
+                            {% set prix_total_poid = (item.product.weight.price) %}
+                            {{ dump(item.weight.kg) }}{{ dump(item.weight.price) }}{{ dump(item.product.weight.kg * item.quantity) }}
+
                             {# {% set pp = 0 + (poid_total) %}
                             {% set pp = (item.weight.price) %}
                             {% set oo = ii = (item.weight.price) %} #}
