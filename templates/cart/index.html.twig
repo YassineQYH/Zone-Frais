@@ -47,7 +47,7 @@
                                 </td>
                                 <td>{{ (item.product.price / 100)|number_format(2, ',','.') }} €</td>
                                 <td>{{ ((item.product.price * item.quantity) / 100)|number_format(2, ',','.') }} €</td>
-                                <td>{{ ((item.product.weight * item.quantity) / 100)|number_format(2, ',','.') }} Kg</td>
+                                <td>{{ ((item.product.weight)) }} Kg</td>
                                 <td>
                                 <a href="{{ path('delete_to_cart', {'id' : item.product.id }) }}" style="color:blue">
                                     <img src="{{ asset('assets/img/delete.png') }}" height="18px" alt="Supprimer"></td>
