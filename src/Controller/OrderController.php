@@ -65,6 +65,12 @@ class OrderController extends AbstractController
         foreach($panier as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
             $qantity_product+=$element['quantity'];
+
+            /* foreach ($cart->getFull() as $element) {
+                $prix_total_article = $element['product']->getPrice() * $element['quantity'];
+            }
+            dd($prix_total_article); */
+
             $poid+=$poidAndQantity;
         }
 
@@ -100,6 +106,9 @@ class OrderController extends AbstractController
                     $order->setUser($this->getUser());
                     $order->setCreatedAt($date);
                     $order->setCarrierPrice($totalLivraison * 100);
+                    /* foreach ($cart->getFull() as $element) {
+                        $order->setTotalPrice( (($element['product']->getPrice() * $element['quantity']) + (3)) );
+                    } */
                     $order->setDelivery($delivery_content);
                     $order->SetState(0);
 

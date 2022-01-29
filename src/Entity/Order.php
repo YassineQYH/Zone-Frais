@@ -37,6 +37,11 @@ class Order
     private $carrierPrice;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    /* private $totalPrice; */
+
+    /**
      * @ORM\Column(type="text")
      */
     private $delivery;
@@ -127,6 +132,18 @@ class Order
 
         return $this;
     }
+
+/*     public function getTotalPrice(): ?float
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(float $totalPrice): self
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    } */
     
     /**
      * @return Collection|OrderDetails[]
