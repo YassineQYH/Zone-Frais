@@ -6,8 +6,12 @@
 
 {% block title %}Valider ma commande : zone-frais{% endblock %}
 
+{% block menu %}
+    {{ include('partials/menu2.html.twig') }}
+{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="container"></br></br></br></br></br></br></br>
         <h2>Mon récapitulatif</h2>
         <p>Vérifiez vos informations avant de payer votre commande.</p>
         <hr>
@@ -18,11 +22,10 @@
                     {{ delivery|raw }}
                 </div>
                 <hr>
-                <strong>Livraison : </strong></br>
+                {# <strong>Livraison : </strong></br>
                 <div class="form-check">
-                    {{ (totalLivraison) }} €
-                    {# {{ (carrier.price / 100)|number_format(2, ',','.') }} € #}
-                </div>
+                    {{ (totalLivraison)|number_format(2, ',','.') }} €
+                </div> #}
             </div>
             <div class="col-md-6">
                 <div class="text-center">
@@ -34,12 +37,12 @@
                     {% for key,item in cart %}{# key => pour être en mesure de compter #}
                         <div class="row {% if key> 0 %}mt-2{% endif %}">
                             <div class="col-4">
-                                <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px"></br>
+                                <img src="/uploads/{{ item.product.image }}" alt="{{ item.product.name }}" height="75px"></br>
                             </div>
                             <div class="col-8 my-auto">
                                 {{ item.product.name }} - </br>
                                 <small>
-                                    {{ item.product.subtitle }}
+                                    {{ item.product.description }}
                                     </br>
                                     x {{ item.quantity }}
                                 </small>
@@ -54,16 +57,14 @@
 
                 <hr>
                 <strong>Sous-Total : </strong> {{ (total / 100)|number_format(2, ',','.') }} €  </br>
-                <strong>Livraison : </strong> {{ (totalLivraison) }} €
+                <strong>Livraison : </strong> {{ (totalLivraison)|number_format(2, ',','.') }} €
                 <hr>
                 <strong>Total : </strong> {{ ((total / 100) + (totalLivraison)) }} €
-                {# <strong>Total : </strong> {{ ((total / 100) + (totalLivraison / 100))|number_format(2, ',','.') }} € #}
 
-                <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (totalLivraison)) }} €</a>
-                {# <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (carrier.price / 100))|number_format(2, ',','.') }} €</a> #}
+                <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (totalLivraison))|number_format(2, ',','.') }} €</a>
             </div>
         </div>
-    </div>
+    </div></br></br></br></br></br></br></br>
 {% endblock %}
 
 {% block widget %}
