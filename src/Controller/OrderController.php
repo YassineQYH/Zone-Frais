@@ -59,12 +59,25 @@ class OrderController extends AbstractController
             'user' => $this->getUser() /* Me permettra de récupérer dans mon formulaire l'utilisateur en question pour récupérer ses adresses à lui et pas aussi celles des autres utilisateurs. | Voir ensuite OrderType.php */
         ]);
 
+        (double) $poid = $qantity_product = null ;
+
+        $panier=$cart->getFull();
+        foreach($panier as $element){
+            $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
+            $qantity_product+=$element['quantity'];
+            $poid+=$poidAndQantity;
+        }
+
+        $priceList=$this->fillPriceList($weight);
+        $totalLivraison=$priceList[$poid];
+
             $form->handleRequest($request); /* Pour dire au formulaire : écoute la requête s'il te plait. */
 
             if ($form->isSubmitted() && $form->isValid()) {
                 //dd($form->getData());
 
                 $date = new DateTime();
+                /* $carriers = $form->get('carriers')->getData(); */
                 $delivery = $form->get('addresses')->getData();
                 $delivery_content = $delivery->getFirstname().' '.$delivery->getLastname();
                 $delivery_content .= '</br>'.$delivery->getPhone();
@@ -86,6 +99,7 @@ class OrderController extends AbstractController
                     $order->setReference($reference);
                     $order->setUser($this->getUser());
                     $order->setCreatedAt($date);
+                    $order->setCarrierPrice($totalLivraison * 100);
                     $order->setDelivery($delivery_content);
                     $order->SetState(0);
 
@@ -115,17 +129,7 @@ class OrderController extends AbstractController
                     $this->entityManager->persist($orderDetails);
                 }   //dd($orderedList);
 
-                (double) $poid = $qantity_product = null ;
 
-                $panier=$cart->getFull();
-                foreach($panier as $element){
-                    $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
-                    $qantity_product+=$element['quantity'];
-                    $poid+=$poidAndQantity;
-                }
-        
-                $priceList=$this->fillPriceList($weight);
-                $totalLivraison=$priceList[$poid];
 
 
                 $this->entityManager->flush();
@@ -140,6 +144,7 @@ class OrderController extends AbstractController
 
                 return $this->render('order/add.html.twig', [
                     'cart' => $cart->getFull(),
+                    /* 'carrier' => $carriers, */
                     'delivery' => $delivery_content,
                     'reference' => $order->getReference(),
                     'totalLivraison' => $totalLivraison,

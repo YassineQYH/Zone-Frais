@@ -32,6 +32,11 @@ class Order
     private $createdAt;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    private $carrierPrice;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $delivery;
@@ -40,7 +45,6 @@ class Order
      * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="myOrder")
      */
     private $orderDetails;
-
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -112,6 +116,18 @@ class Order
         return $this;
     }
 
+    public function getCarrierPrice(): ?float
+    {
+        return $this->carrierPrice;
+    }
+
+    public function setCarrierPrice(float $carrierPrice): self
+    {
+        $this->carrierPrice = $carrierPrice;
+
+        return $this;
+    }
+    
     /**
      * @return Collection|OrderDetails[]
      */
