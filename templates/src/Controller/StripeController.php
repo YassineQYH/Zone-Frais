@@ -21,7 +21,7 @@ class StripeController extends AbstractController
     public function index(EntityManagerInterface $entityManager, Cart $cart, $reference)
     {
         $product_for_stripe = [];
-        $YOUR_DOMAIN = 'https://sy-shop.yassine-qayouh-dev.com';
+        $YOUR_DOMAIN = 'https://zone-frais.yassine-qayouh-dev.com';
         
         $order = $entityManager->getRepository(Order::class)->findOneByReference($reference);
 
@@ -43,18 +43,6 @@ class StripeController extends AbstractController
                 'quantity' => $product->getQuantity(),
             ];
         }
-
-        $product_for_stripe[] = [
-            'price_data' => [
-                'currency' => 'eur',
-                'unit_amount' => $order->getCarrierPrice(),
-                'product_data' => [
-                    'name' => $order->getCarrierName(),
-                    'images' => [$YOUR_DOMAIN],/* On peut rajouter une image par exemple Colissimo, une icone de trasnporteur etc */
-                ],
-            ],
-            'quantity' => 1,
-        ];
 
         Stripe::setApiKey('sk_test_51HqeyuB0aAqL8oGBQde3mZ6O4x7MNbgY5aTAvJ0rGJJtj7Pg5swy9D5cZvfGlKF0oRHYfB9YeN174lw9IMnAOwRq00Ov0etLTq');
 

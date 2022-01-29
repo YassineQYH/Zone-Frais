@@ -30,15 +30,15 @@ class CartController extends AbstractController
     public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
         
-
-        (double) $poid = $qtty = null ;
         $categories = $category->findAll();
+
+        (double) $poid = $qantity_product = null ;
 
         $cart=$cart->getFull();
         foreach($cart as $element){
-            $poidAndQtty=$element['product']->getWeight()->getKg() * $element['quantity'];
-            $qtty+=$element['quantity'];
-            $poid+=$poidAndQtty;
+            $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
+            $qantity_product+=$element['quantity'];
+            $poid+=$poidAndQantity;
         }
 
         $priceList=$this->fillPriceList($weight);
@@ -48,7 +48,7 @@ class CartController extends AbstractController
             'cart' => $cart,
             'categories' => $categories,
             'poid' => $poid,
-            'qtty' => $qtty,
+            'qantity_product' => $qantity_product,
             'totalLivraison' => $totalLivraison
         ]);
     }

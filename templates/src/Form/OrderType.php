@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Address;
-use App\Entity\Carrier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,13 +22,6 @@ class OrderType extends AbstractType
                 'required' => true,
                 'class' => Address::class,
                 'choices' => $user->getAddresses(), /* Me permet de récupérer uniquement les adresses de l'utilisateur et non pas des autres */
-                'multiple' => false,
-                'expanded' => true
-            ])
-            ->add('carriers', EntityType::class, [
-                'label' => 'Choisissez votre trasnporteur',
-                'required' => true,
-                'class' => Carrier::class,
                 'multiple' => false,
                 'expanded' => true
             ])

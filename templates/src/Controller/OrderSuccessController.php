@@ -40,7 +40,7 @@ class OrderSuccessController extends AbstractController
 
             // Envoyer un email à notre client pour lui confirmer sa commande
             $mail = new Mail();
-            $content = "Bonjour ".$order->getUser()->getFirstname()."</br>SY-Shop vous remercie pour votre commande n°<strong>" .$order->getReference()."</strong> pour un total de " .$order->getTotal()/100 ." Euros.</br>Vous avez choisi le transporteur : " .$order->getCarrierName()." pour un montant de " .$order->getCarrierPrice()/100 ." Euros.</br>Vous serez averti lorsque la préparation de la commande sera terminée et envoyée.</br>";
+            $content = "Bonjour ".$order->getUser()->getFirstname()."</br>SY-Shop vous remercie pour votre commande n°<strong>" .$order->getReference()."</strong> pour un total de " .$order->getTotal()/100 ." Euros.</br>Vous serez averti lorsque la préparation de la commande sera terminée et envoyée.</br>";
             $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), "Votre commande n° ".$order->getReference()." est bien validée.Vous serez averti par mail lors de la préparation de votre commande et aussi lors de l'envoi de votre commande.", $content);
 
             // Envoyer un email à l'admin pour l'informer qu'une commande à été passé.

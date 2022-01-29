@@ -4,7 +4,7 @@
     <script src="https://js.stripe.com/v3/"></script>
 {% endblock %}
 
-{% block title %}Valider ma commande : SY-Shop{% endblock %}
+{% block title %}Valider ma commande : zone-frais{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -18,11 +18,10 @@
                     {{ delivery|raw }}
                 </div>
                 <hr>
-                <strong>Mon transporteur : </strong></br>
+                <strong>Livraison : </strong></br>
                 <div class="form-check">
-                    {{ carrier.name }}</br>
-                    {{ carrier.description }}</br>
-                    {{ (carrier.price / 100)|number_format(2, ',','.') }} €
+                    {{ (totalLivraison) }} €
+                    {# {{ (carrier.price / 100)|number_format(2, ',','.') }} € #}
                 </div>
             </div>
             <div class="col-md-6">
@@ -38,7 +37,7 @@
                                 <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px"></br>
                             </div>
                             <div class="col-8 my-auto">
-                                {{ item.productDeclination.product }} - {{ item.productDeclination.size.name }}</br>
+                                {{ item.product.name }} - </br>
                                 <small>
                                     {{ item.product.subtitle }}
                                     </br>
@@ -55,11 +54,13 @@
 
                 <hr>
                 <strong>Sous-Total : </strong> {{ (total / 100)|number_format(2, ',','.') }} €  </br>
-                <strong>Livraison : </strong> {{ (carrier.price / 100)|number_format(2, ',','.') }} €
+                <strong>Livraison : </strong> {{ (totalLivraison) }} €
                 <hr>
-                <strong>Total : </strong> {{ ((total / 100) + (carrier.price / 100))|number_format(2, ',','.') }} €
+                <strong>Total : </strong> {{ ((total / 100) + (totalLivraison)) }} €
+                {# <strong>Total : </strong> {{ ((total / 100) + (totalLivraison / 100))|number_format(2, ',','.') }} € #}
 
-                <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (carrier.price / 100))|number_format(2, ',','.') }} €</a>
+                <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (totalLivraison)) }} €</a>
+                {# <a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + (carrier.price / 100))|number_format(2, ',','.') }} €</a> #}
             </div>
         </div>
     </div>

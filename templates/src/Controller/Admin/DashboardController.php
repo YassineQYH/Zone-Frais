@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Carrier;
 use App\Entity\Category;
 use App\Entity\Header;
 use App\Entity\Illustration;
@@ -55,7 +54,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Poids', 'fas fa-home', Weight::class);
         yield MenuItem::linkToCrud('Illustration', 'fas fa-home', Illustration::class);
         yield MenuItem::linkToCrud('Catégorie', 'fas fa-home', Category::class);
-        yield MenuItem::linkToCrud('Carriers', 'fa fa-truck', Carrier::class);
 
     }
 }

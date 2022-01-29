@@ -35,16 +35,16 @@
                             <div class="col-4">
                                 <img src="/uploads/{{ item.product.image }}" alt="{{ item.product.name }}" height="75px"></br>
                             </div>
-                            <div class="col-8 my-auto">
-                                {{ item.product.name }} -{#  {{ item.product.weight.kg }} #}</br>
+                            <div class="col-6 my-auto">
+                                {{ item.product.name }} - {{ (item.product.price / 100)|number_format(2, ',', '.') }} €</br>
                                 <small>{{ item.product.description }}</small>
                             </div>
                             <div class="col-2 my-auto">
                                 x {{ item.quantity }}
                             </div>
-                        </div>
+                        </div></br>
                     {% endfor %}
-                </div>
+                </div></br></br>
             </div>
         </div>
     </div>

@@ -5,8 +5,10 @@ namespace App\Controller;
 use DateTime;
 use App\Classe\Cart;
 use App\Entity\Order;
+use App\Entity\Weight;
 use App\Form\OrderType;
 use App\Entity\OrderDetails;
+use App\Repository\WeightRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +51,10 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande/recapitulatif", name="order_recap", methods={"POST"})
      */
-    public function add(Cart $cart, Request $request)   /* methods={"POST"} => accepter uniquement ceux qui viennent d'un POST */
+    public function add(Cart $cart, Request $request, WeightRepository $weight, CategoryRepository $category)   /* methods={"POST"} => accepter uniquement ceux qui viennent d'un POST */
     {
+        $categories = $category->findAll();
+
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser() /* Me permettra de récupérer dans mon formulaire l'utilisateur en question pour récupérer ses adresses à lui et pas aussi celles des autres utilisateurs. | Voir ensuite OrderType.php */
         ]);
@@ -61,7 +65,6 @@ class OrderController extends AbstractController
                 //dd($form->getData());
 
                 $date = new DateTime();
-                $carriers = $form->get('carriers')->getData();
                 $delivery = $form->get('addresses')->getData();
                 $delivery_content = $delivery->getFirstname().' '.$delivery->getLastname();
                 $delivery_content .= '</br>'.$delivery->getPhone();
@@ -74,7 +77,6 @@ class OrderController extends AbstractController
                 $delivery_content .= '</br>'.$delivery->getPostal().' '.$delivery->getCity();
                 $delivery_content .= '</br>'.$delivery->getCountry();
 
-                //dd($carriers);
                 //dd($delivery);
                 //dd($delivery_content);
 
@@ -84,8 +86,6 @@ class OrderController extends AbstractController
                     $order->setReference($reference);
                     $order->setUser($this->getUser());
                     $order->setCreatedAt($date);
-                    $order->setCarrierName($carriers->getName());
-                    $order->setCarrierPrice($carriers->getPrice());
                     $order->setDelivery($delivery_content);
                     $order->SetState(0);
 
@@ -100,6 +100,7 @@ class OrderController extends AbstractController
                     $orderDetails = new OrderDetails();
                     $orderDetails->setMyOrder($order);
                     $orderDetails->setProduct($element['product']->getName());
+                    $orderDetails->setWeight($element['product']->getWeight());
                     $orderDetails->setQuantity($element['quantity']);
                     $orderDetails->setPrice($element['product']->getPrice());
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
@@ -114,6 +115,18 @@ class OrderController extends AbstractController
                     $this->entityManager->persist($orderDetails);
                 }   //dd($orderedList);
 
+                (double) $poid = $qantity_product = null ;
+
+                $panier=$cart->getFull();
+                foreach($panier as $element){
+                    $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
+                    $qantity_product+=$element['quantity'];
+                    $poid+=$poidAndQantity;
+                }
+        
+                $priceList=$this->fillPriceList($weight);
+                $totalLivraison=$priceList[$poid];
+
 
                 $this->entityManager->flush();
 
@@ -127,12 +140,26 @@ class OrderController extends AbstractController
 
                 return $this->render('order/add.html.twig', [
                     'cart' => $cart->getFull(),
-                    'carrier' => $carriers,
                     'delivery' => $delivery_content,
-                    'reference' => $order->getReference()
+                    'reference' => $order->getReference(),
+                    'totalLivraison' => $totalLivraison,
+                    'categories' => $categories
                 ]);
             }
 
         return $this->redirectToRoute('cart');
     }
+
+    public function fillPriceList($weight){
+        $priceList=[];
+        $weight = $weight->findAll();
+
+        foreach($weight as $item){
+           // $priceList[$item->getKg()]=$item->getPrice();
+           $priceList[(string) $item->getKg()]=((string) $item->getPrice());
+        }  
+        return $priceList;         
+         //dd( (double) ($priceList["0.75"]));
+    }
+
 }

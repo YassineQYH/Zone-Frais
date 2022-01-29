@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Classe\Mail;
 use App\Entity\Order;
+use App\Entity\Weight;
+use App\Repository\WeightRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -104,8 +106,7 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('user.getFullname', 'Utilisateur'),
             TextEditorField::new('delivery', 'Adresse de livraison')->onlyOnDetail(),
             MoneyField::new('total', 'Total produit')->setCurrency('EUR'),
-            TextField::new('carrierName', 'Transporteur'),
-            MoneyField::new('carrierPrice', 'Frais de port')->setCurrency('EUR'),
+            MoneyField::new('totalLivraison', 'Frais de livraison')->setCurrency('EUR'),
             ChoiceField::new('state')->setChoices([
                 'Non payée' => 0,
                 'Payée' => 1,

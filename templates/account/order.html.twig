@@ -40,7 +40,7 @@
                         </td>
                         <td>{{ order.createdAt|date('d/m/Y') }}</td>
                         <td>{{ order.orderDetails|length }}</td>
-                        <td>{{ ((order.carrierPrice + order.getTotal) / 100)|number_format(2, ',', '.') }} €</td>
+                        <td>{{ ((totalLivraison + order.getTotal) / 100)|number_format(2, ',', '.') }} €</td>
                         <td class="text-right"><a href="{{ path('account_order_show', { 'reference' : order.reference }) }}"> Voir ma commande</a></td>
                     </tr>
                 {% endfor %}

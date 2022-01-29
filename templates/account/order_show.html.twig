@@ -18,7 +18,6 @@
         </td></br>
     <strong>Commande passée le :</strong> {{ order.createdAt|date('d/m/Y') }}</br>
     <strong>Référence de ma commande :</strong><small>{{ order.reference }}</small></br>
-    <strong>Transporteur choisi :</strong> {{ order.carriername }}
     <hr>
     <strong>Détails : </strong>
 
@@ -47,7 +46,8 @@
 
     <div class="text-right">
     <strong>Sous-total : </strong>{{ (order.getTotal / 100)|number_format(2, ',', '.') }} €</br>
-    <strong>Livraison : </strong>{{ (order.carrierprice / 100)|number_format(2, ',', '.') }} €</br>
-    <strong>Total : </strong>{{ ((order.carrierPrice + order.getTotal) / 100)|number_format(2, ',', '.') }} €</br>
+    <strong>Livraison : </strong>{{ (totalLivraison)|number_format(2, ',', '.') }} €</br>
+    {# <strong>Livraison : </strong>{{ (totalLivraison / 100)|number_format(2, ',', '.') }} €</br> #}
+    <strong>Total : </strong>{{ ((totalLivraison + order.getTotal) / 100)|number_format(2, ',', '.') }} €</br>
     </div>
 {% endblock %}
