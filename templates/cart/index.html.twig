@@ -59,12 +59,11 @@
                             {# PRIX TOTAL DES ARTICLES #}
                             {% set prix_total_article = prix_total_article + (item.product.price * item.quantity) %}
                             {# POIDS TOTAL DES ARTICLES #}
-                            {% set poid_total = poid_total + (item.product.weight.kg * item.quantity) %}
+                            {# {% set poid_total = poid_total + (item.product.weight.kg * item.quantity) %} #}
                             {# NOMBRES D'ARTICLES TOTAL #}
                             {# {% set articles_panier = item.quantity %} #}
                             {# PRIX DE LIVRAISON #}
-                            {% set prix_total_poid = (item.product.weight.price) %}
-                            {{ dump(item.weight.kg) }}{{ dump(item.weight.price) }}{{ dump(item.product.weight.kg * item.quantity) }}
+                            {# {% set prix_total_poid = (item.product.weight.price) %} #}
 
 
                             {# {% set pp = 0 + (poid_total) %}
@@ -74,9 +73,9 @@
                     </tbody>
                 </table>
                 <div class="text-right mb-5">
-                    <b>Nombre de produits :</b> {{ cart|length }}</br>
+                    <b>Nombre de produits :</b> {{ (qtty) }}</br>
                     <b>Prix de mon panier :</b> {{ (prix_total_article / 100)|number_format(2, ',','.') }} € </br>
-                    <b>Prix livraison :</b> {{ (poid_total)|number_format(2, ',','.') }} kg = {{ (prix_total_poid)|number_format(2, ',','.') }} € </br>
+                    <b>Prix livraison :</b> {{ (poid)|number_format(2, ',','.') }} kg = {{ (totalLivraison)|number_format(2, ',','.') }} € </br>
                     <b>Prix Total :</b> {{ ((prix_total_article / 100 ) + prix_total_poid)|number_format(2, ',','.') }} € 
                     <a href="{{ path('order') }}" class="btn btn-success btn-block">Valider mon panier</a>
                 </div>

@@ -75,17 +75,17 @@ class Cart
         if ($this->get()) {
             foreach ($this->get() as $id => $quantity) {
 
-                $product_object = $this->entityManager->getRepository(Product::class)->findOneById($id);
+                $product = $this->entityManager->getRepository(Product::class)->findOneById($id);
                 $weight = $this->entityManager->getRepository(Weight::class)->findOneById($id);
 
                 // Pour supprimer un produit qui n'existe pas si l'utilise fait /cart/add/xxx
-                if (!$product_object) {
+                if (!$product) {
                     $this->delete($id);
                     continue;
                 }
 
                 $cartComplete[] = [
-                    'product' => $product_object,
+                    'product' => $product,
                     'quantity' => $quantity,
                     'weight' => $weight
                 ];

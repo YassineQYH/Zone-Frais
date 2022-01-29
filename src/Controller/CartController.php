@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Product;
+use App\Entity\Weight;
 use App\Repository\CategoryRepository;
+use App\Repository\WeightRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,14 +27,42 @@ class CartController extends AbstractController
     /**
      * @Route("/mon-panier", name="cart")
      */
-    public function index(Cart $cart, CategoryRepository $category)
+    public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
+        
+
+        (double) $poid = $qtty = null ;
         $categories = $category->findAll();
 
+        $cart=$cart->getFull();
+        foreach($cart as $element){
+            $poidAndQtty=$element['product']->getWeight()->getKg() * $element['quantity'];
+            $qtty+=$element['quantity'];
+            $poid+=$poidAndQtty;
+        }
+
+        $priceList=$this->fillPriceList($weight);
+        $totalLivraison=$priceList[$poid];
+
         return $this->render('cart/index.html.twig', [
-            'cart' => $cart->getFull(),
-            'categories' => $categories
+            'cart' => $cart,
+            'categories' => $categories,
+            'poid' => $poid,
+            'qtty' => $qtty,
+            'totalLivraison' => $totalLivraison
         ]);
+    }
+
+    public function fillPriceList($weight){
+        $priceList=[];
+        $weight = $weight->findAll();
+
+        foreach($weight as $item){
+           // $priceList[$item->getKg()]=$item->getPrice();
+           $priceList[(string) $item->getKg()]=((string) $item->getPrice());
+        }  
+        return $priceList;         
+         //dd( (double) ($priceList["0.75"]));
     }
 
     /**
@@ -46,7 +77,7 @@ class CartController extends AbstractController
         // return $this->redirectToRoute('cart');
         //dd($_SERVER['HTTP_REFERER']);
         //return $this->redirectToRoute('add_to_cart', ['id' => 17 ]);
-        return $this->redirect($this->generateUrl('produit', array('slug' => $product->getSlug())));
+        return $this->redirect($_SERVER['HTTP_REFERER']);
 
 //return $this->redirectToRoute(['add_to_cart' : ]);
         // return $notification;

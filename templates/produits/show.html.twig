@@ -61,6 +61,9 @@
                         necessitatibus incidunt aut ducimus, quis, veritatis
                         cum dolore tempora? Corporis, nostrum alias.
                       </p>
+                      <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
+                        <input type="submit" class="addCart" value="Ajouter"/>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -82,8 +85,6 @@
           <div>
             <div class="glide">
               <div class="glide__track" data-glide-el="track">
-                {# <ul class="glide__slides">
-                  <li class="glide__slide"> #}
 
                     <div id="autoWidth" class="cs-hidden" class="glide__bullets" data-glide-el="controls[nav]" {# class="glide__slides" #}>
                       {% for key, item in illustrations %}
@@ -95,44 +96,13 @@
                         </button>
                       {% endfor %}
                     </div>
-
-                  {# </li>
-                </ul> #}
               </div>
             </div>
           </div>
 
-          <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
-            <div>
-              <select name="id_declination">
-                <option value="Select Size" selected disabled>Sélectionner la taille</option>
-                {# {% for element in product %}
-                  {% if (element.stock > 0) %}
-                    <option value="{{ element.product }}">{{ element.weight }}</option>
-                  {% endif %}
-                  {% if (element.stock <= 0) %}
-                    <option class="stock-indisponible"disabled>{{ element.weight }} : Indisponible</option>
-                  {% endif %}
-                {% endfor %} #}
-              </select>
-              <span><i class='bx bx-chevron-down'></i></span>
-            </div>
-            <input type="submit" class="addCart" value="Ajouter"/>
-          </form>
-
-          {# {% for item in cart.full %}<input type="text" placeholder="{{ item.quantity }}">{% endfor %} #}
-          {# <a href="{{ path('add_to_cart', {'id' : product.id }) }}" type="submit" class="addCart">Ajouter</a> #}
-
         </div>
       </div>
     </section>
-
-      {# <script src="{{ asset('assets/js/slide-img-product-show-swiper.min.js') }}" type="text/javascript"></script>
-      <script src="{{ asset('assets/js/slide-img-product-show.js') }}" type="text/javascript"></script> #}
-
-      {# caroussel meilleurs vente - script.js #}
-      {# <script src="{{ asset('assets/js/slide-product.js') }}" type="text/javascript"></script>
-      <script src="{{ asset('assets/js/lightslider.js') }}" type="text/javascript"></script> #}
 
       {# TEST : Slide img - script.js #}
       <script src="{{ asset('assets/js/slide-img.js') }}" type="text/javascript"></script>
