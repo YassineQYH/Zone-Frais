@@ -21,7 +21,7 @@ class StripeController extends AbstractController
     public function index(EntityManagerInterface $entityManager, Cart $cart, $reference)
     {
         $product_for_stripe = [];
-        $YOUR_DOMAIN = 'https://zone-frais.yassine-qayouh-dev.com';
+        $YOUR_DOMAIN = 'http://127.0.0.1:8000';
         
         $order = $entityManager->getRepository(Order::class)->findOneByReference($reference);
 
@@ -37,14 +37,26 @@ class StripeController extends AbstractController
                     'unit_amount' => $product->getPrice(),
                     'product_data' => [
                         'name' => $product->getProduct(),
-                        'images' => [$YOUR_DOMAIN."/uploads/".$product_object->getIllustration()],
+                        'images' => [$YOUR_DOMAIN."/uploads/".$product_object->getImage()],
                     ],
                 ],
                 'quantity' => $product->getQuantity(),
             ];
         }
 
-        Stripe::setApiKey('sk_test_51HqeyuB0aAqL8oGBQde3mZ6O4x7MNbgY5aTAvJ0rGJJtj7Pg5swy9D5cZvfGlKF0oRHYfB9YeN174lw9IMnAOwRq00Ov0etLTq');
+        $product_for_stripe[] = [
+            'price_data' => [
+                'currency' => 'eur',
+                'unit_amount' => $order->getCarrierPrice(),
+                'product_data' => [
+                    'name' => 'Livraison',
+                    'images' => [$YOUR_DOMAIN],/* On peut rajouter une image par exemple Colissimo, une icone de trasnporteur etc */
+                ],
+            ],
+            'quantity' => 1,
+        ];
+
+        Stripe::setApiKey('sk_test_51KNdRaBMBArCOnoiBGyovclE3rWKPO9X8dngKjHXezHj9SXaWeC3HrqOz7LCZAtXpVrJQzbx3PBPucDocAP8anBu00ZjyOIrSx');
 
 
         $checkout_session = Session::create([
@@ -62,6 +74,6 @@ class StripeController extends AbstractController
         $entityManager->flush();
 
         $response = new JsonResponse(['id' => $checkout_session->id]);
-        return $response;
+        return $this->redirect($checkout_session->url);
     }
 }

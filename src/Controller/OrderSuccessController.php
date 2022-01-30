@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Order;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderSuccessController extends AbstractController
 {
@@ -22,8 +23,9 @@ class OrderSuccessController extends AbstractController
     /**
      * @Route("/commande/merci/{stripeSessionId}", name="order_validate")
      */
-    public function index(Cart $cart, $stripeSessionId)
+    public function index(Cart $cart, $stripeSessionId, CategoryRepository $category)
     {
+        $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
 
         if (!$order || $order->getUser() != $this->getUser()) {  /* Si la commande n'existe pas je renvoi vers la home OU regarder si le $order->getUser est bien égale à l'utilisateur que je suis moi en ce moment (connecté) */
@@ -52,7 +54,8 @@ class OrderSuccessController extends AbstractController
         }
 
         return $this->render('order_success/index.html.twig', [
-            'order' => $order
+            'order' => $order,
+            'categories' => $categories,
         ]);
     }
 }

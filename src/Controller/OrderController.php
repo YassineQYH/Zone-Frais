@@ -96,9 +96,6 @@ class OrderController extends AbstractController
                 $delivery_content .= '</br>'.$delivery->getPostal().' '.$delivery->getCity();
                 $delivery_content .= '</br>'.$delivery->getCountry();
 
-                //dd($delivery);
-                //dd($delivery_content);
-
                 // Enregistrer ma commande Order()
                     $order = new Order();
                     $reference = $date->format('dmY').'-'.uniqid();
@@ -116,10 +113,6 @@ class OrderController extends AbstractController
 
                 // Enregistrer mes produits OrderDetails()
                 foreach ($cart->getFull() as $element) {
-                    //dd($product["quantity"]);
-                    //dd($product['productDeclination']->getProduct());
-                    //dd($product['productDeclination']->getSize()->getName());
-                    /* dd($product['product']->getWeight()->getKg()); */
                     $orderDetails = new OrderDetails();
                     $orderDetails->setMyOrder($order);
                     $orderDetails->setProduct($element['product']->getName());
@@ -127,29 +120,14 @@ class OrderController extends AbstractController
                     $orderDetails->setQuantity($element['quantity']);
                     $orderDetails->setPrice($element['product']->getPrice());
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
-                    /* $orderDetails->setWeight($element['product']->getWeight()->getKg()); */
-
-                    // PREPARATION DU STOCKAGE AUTOMATIQUE APRES COMMANDE
-                    // $orderedList[]=[
-                    //     "Id" => $element["product"]->getId(),
-                    //     "Quantity" => $element["quantity"],
-                    //     "OrderDetails" => $orderDetails,
-                    // ];
+    
                     $this->entityManager->persist($orderDetails);
-                }   //dd($orderedList);
+                }   
 
 
 
 
                 $this->entityManager->flush();
-
-                //foreach ($orderedList as  $element)
-                //{
-                    //dd($element['Id']);
-                    //$reportToUpdate = $this->getDoctrine()->getRepository(OrderDetails::class)->findAll();
-                    //dd($reportToUpdate);
-                    //$reportToUpdate->setQuantity("2");
-                //}
 
                 return $this->render('order/add.html.twig', [
                     'cart' => $cart->getFull(),

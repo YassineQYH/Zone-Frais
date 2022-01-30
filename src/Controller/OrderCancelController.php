@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderCancelController extends AbstractController
 {
@@ -19,8 +20,9 @@ class OrderCancelController extends AbstractController
     /**
      * @Route("/commande/erreur/{stripeSessionId}", name="order_cancel")
      */
-    public function index($stripeSessionId)
+    public function index($stripeSessionId, CategoryRepository $category)
     {
+        $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
 
         if (!$order || $order->getUser() != $this->getUser()) {  /* Si la commande n'existe pas je renvoi vers la home OU regarder si le $order->getUser est bien égale à l'utilisateur que je suis moi en ce moment (connecté) */
@@ -30,7 +32,8 @@ class OrderCancelController extends AbstractController
         // Envoyer un email à notre utilisateur pour lui indiquer l'échec de paiement
 
         return $this->render('order_cancel/index.html.twig', [
-            'order' => $order
+            'order' => $order,
+            'categories' => $categories,
         ]);
     }
 }

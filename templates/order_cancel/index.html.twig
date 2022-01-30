@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Erreur de paiement : SY-Shop{% endblock %}
+{% block title %}Erreur de paiement : Zone-Frais{% endblock %}
 
-{% block content %}
+{% block content %}<br><br><br><br><br><br><br>
     <h2>Erreur de paiement</h2>
     <p>
         Bonjour <strong>{{ order.user.firstname }} {{ order.user.lastname }},</strong></br></br>
@@ -11,4 +11,5 @@
         <hr>
         <a href="{{ path('order') }}" class="btn btn-success">Réessayer le paiement</a>.
     </p>
+    </div><br><br><br><br><br>
 {% endblock %}

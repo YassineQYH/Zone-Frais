@@ -42,7 +42,9 @@ class CartController extends AbstractController
         }
 
         $priceList=$this->fillPriceList($weight);
-        $totalLivraison=$priceList[$poid];
+        //dd($priceList);
+        $totalLivraison=$priceList[(string)(float)$poid];
+        
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
