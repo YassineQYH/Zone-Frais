@@ -33,8 +33,8 @@ class CartController extends AbstractController
     {
         
         $categories = $category->findAll();
-        $expp=[];
-        (double) $poid = $totalLivraison = $qantity_product = null ;
+
+        (double) $poid = $qantity_product = null ;
 
         $cart=$cart->getFull();
         foreach($cart as $element){
@@ -44,53 +44,25 @@ class CartController extends AbstractController
         }
 
         $priceList=$this->fillPriceList($weight);
-        //dump($priceList,$poid);
-        $execpt=["0.25","0.5","0.75"];
+        /* dd($priceList); */
+        /* dump(getType($priceList[(string)$poid]));
+        dd($priceList[(string)$poid]); */
 
-        /* for($i=0.01;$i<=0.99;$i++){
-            $expp[]=$i;
-        } */
-        for($x = 0.01; $x < 1; $x = $x +0.01){
-            $expp[]=$x;
-        }
-        
-        //dd($expp);
-
-        if(!is_null($poid)){ // si le poit il est pas null 
-           // dd('first',$priceList,$poid);
-
-            if(is_string($poid) || in_array($poid,$expp)){
-                $poid=(double) $poid;
-
-                if(in_array($poid,$expp)){
-                    $totalLivraison=$priceList[(string)$poid];
-                }
-
-
-
-            }else{
-               // dd('second',$priceList,$poid);
-                if(in_array($poid,$expp)){
-                $totalLivraison=$priceList[$poid];
-            }
-            }
-        }
-
-        /* dump($poid);
-        dump($priceList);die; */
-       // dd(in_array($poid,$execpt));
-       //if(is_string($poid))
-       
-        //$totalLivraison=$priceList[ $poid];
         /* dump($priceList);
-        dd($totalLivraison); */
+        dd($poid); */
+
+        if(is_string($priceList[(string)$poid])){
+            $totalLivraison=$priceList[(string)$poid];
+        } else
+        $totalLivraison=$priceList[(double) $poid];
+        
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
             'categories' => $categories,
             'poid' => $poid,
             'qantity_product' => $qantity_product,
-            'totalLivraison' => $totalLivraison ?: null
+            'totalLivraison' => $totalLivraison
         ]);
     }
 
@@ -99,18 +71,13 @@ class CartController extends AbstractController
         $weight = $weight->findAll();
 
         foreach($weight as $item){
-           $priceList[(string) $item->getKg()]=$item->getPrice();
+           // $priceList[$item->getKg()]=$item->getPrice();
+           if($item->getKg() === 0.25 or $item->getKg() === 0.50 or $item->getKg() === 0.75){
+                $priceList[ (string)$item->getKg()]=( $item->getPrice());
+           } else
+            $priceList[ $item->getKg()]=( $item->getPrice());
+            
         }  
-
-      
-/*         $myNonFormatedFloat = 0.25;
-        $myGermanNumber = number_format($myNonFormatedFloat, 2, ',', '.'); // -> 5.678,90
-        $myAngloSaxonianNumber = number_format($myNonFormatedFloat, 2, '.', ','); // -> 5,678.90
-
-        dump($myGermanNumber);
-        dd($myAngloSaxonianNumber); */
-
-
         return $priceList;         
          //dd( (double) ($priceList["0.75"]));
     }
