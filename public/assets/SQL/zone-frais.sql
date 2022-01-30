@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 25 jan. 2022 à 23:50
+-- Généré le : lun. 31 jan. 2022 à 00:52
 -- Version du serveur : 10.4.20-MariaDB
 -- Version de PHP : 8.0.8
 
@@ -51,19 +51,6 @@ INSERT INTO `address` (`id`, `user_id`, `name`, `firstname`, `lastname`, `compan
 -- --------------------------------------------------------
 
 --
--- Structure de la table `carrier`
---
-
-CREATE TABLE `carrier` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `category`
 --
 
@@ -101,7 +88,11 @@ CREATE TABLE `doctrine_migration_versions` (
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20220125154927', '2022-01-25 16:49:32', 360);
+('DoctrineMigrations\\Version20220125154927', '2022-01-25 16:49:32', 360),
+('DoctrineMigrations\\Version20220129191325', '2022-01-29 20:13:30', 39),
+('DoctrineMigrations\\Version20220129213312', '2022-01-29 22:38:04', 34),
+('DoctrineMigrations\\Version20220129221649', '2022-01-29 23:16:52', 35),
+('DoctrineMigrations\\Version20220129225229', '2022-01-29 23:52:33', 36);
 
 -- --------------------------------------------------------
 
@@ -156,7 +147,9 @@ INSERT INTO `illustration` (`id`, `product_id`, `image`) VALUES
 (21, 7, 'saint-nectaire02.jpg'),
 (22, 7, 'saint-nectaire03.jpg'),
 (23, 8, 'saint-nectaire04.jpg'),
-(24, 8, 'saint-nectaire03.jpg');
+(24, 8, 'saint-nectaire03.jpg'),
+(25, 10, 'saucissons.jpg'),
+(26, 11, 'fruits-et-legumes.jpg');
 
 -- --------------------------------------------------------
 
@@ -168,12 +161,11 @@ CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
-  `carrier_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `carrier_price` double NOT NULL,
   `delivery` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `stripe_session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` int(11) NOT NULL
+  `state` int(11) NOT NULL,
+  `carrier_price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -218,7 +210,9 @@ INSERT INTO `product` (`id`, `category_id`, `weight_id`, `name`, `slug`, `descri
 (5, 1, 2, 'Pomme', 'pomme', 'Pomme Bio', 'pomme01.jpg', 80, 1),
 (6, 1, 1, 'Banane', 'banane', 'Banane Bio', 'banane01.jpg', 50, 1),
 (7, 3, 4, 'Saint Nectaire entier', 'saint-nectaire-entier', 'Fromage Saint Nectaire entier entre deux', 'saint-nectaire01.jpg', 1800, 1),
-(8, 3, 2, 'Saint Nectaire 500g', 'saint-nectaire-500g', 'Demi saint nectaire vieux', 'saint-nectaire04.jpg', 1000, 1);
+(8, 3, 2, 'Saint Nectaire 500g', 'saint-nectaire-500g', 'Demi saint nectaire vieux', 'saint-nectaire04.jpg', 1000, 1),
+(10, 4, 5, 'Saucisson', 'saucisson', 'saucisse', 'saucissons.jpg', 450, 1),
+(11, 1, 46, 'test', 'test', 'test', 'fruits-et-legumes.jpg', 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -304,7 +298,8 @@ INSERT INTO `weight` (`id`, `kg`, `price`) VALUES
 (38, 27, 29.75),
 (39, 28, 30.6),
 (40, 29, 31.46),
-(41, 30, 32.28);
+(41, 30, 32.28),
+(46, 0.1, 2.65);
 
 --
 -- Index pour les tables déchargées
@@ -316,12 +311,6 @@ INSERT INTO `weight` (`id`, `kg`, `price`) VALUES
 ALTER TABLE `address`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_D4E6F81A76ED395` (`user_id`);
-
---
--- Index pour la table `carrier`
---
-ALTER TABLE `carrier`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `category`
@@ -401,12 +390,6 @@ ALTER TABLE `address`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `carrier`
---
-ALTER TABLE `carrier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `category`
 --
 ALTER TABLE `category`
@@ -422,25 +405,25 @@ ALTER TABLE `header`
 -- AUTO_INCREMENT pour la table `illustration`
 --
 ALTER TABLE `illustration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT pour la table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `reset_password`
@@ -458,7 +441,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `weight`
 --
 ALTER TABLE `weight`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Contraintes pour les tables déchargées
