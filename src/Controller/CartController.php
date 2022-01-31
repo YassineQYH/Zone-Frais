@@ -35,6 +35,7 @@ class CartController extends AbstractController
         $categories = $category->findAll();
         $expp=[];
         (double) $poid = $totalLivraison = $qantity_product = null ;
+        /* (string) $price = $totalPrixLivraison = $qantity_product = null ; */
 
         $cart=$cart->getFull();
         foreach($cart as $element){
@@ -61,9 +62,11 @@ class CartController extends AbstractController
 
             if(is_string($poid) || in_array($poid,$expp)){
                 $poid=(double) $poid;
+                /* $price=(string) $price; */
 
                 if(in_array($poid,$expp)){
                     $totalLivraison=$priceList[(string)$poid];
+                    /* $totalPrixLivraison=$priceList[$price]; */
                 }
 
 
@@ -72,6 +75,7 @@ class CartController extends AbstractController
                // dd('second',$priceList,$poid);
                 if(in_array($poid,$expp)){
                 $totalLivraison=$priceList[$poid];
+                /* $totalPrixLivraison=$priceList[$price]; */
             }
             }
         }
@@ -82,6 +86,7 @@ class CartController extends AbstractController
        //if(is_string($poid))
        
         //$totalLivraison=$priceList[ $poid];
+        //$totalPrixLivraison=$priceList[ $poid];
         /* dump($priceList);
         dd($totalLivraison); */
 
@@ -90,6 +95,7 @@ class CartController extends AbstractController
             'categories' => $categories,
             'poid' => $poid,
             'qantity_product' => $qantity_product,
+            'totalPrixLivraison' => $totalPrixLivraison,
             'totalLivraison' => $totalLivraison ?: null
         ]);
     }
