@@ -33,47 +33,50 @@ class CartController extends AbstractController
     {
         
         $categories = $category->findAll();
-        $expp=[];
-        (double) $poid = $totalLivraison = $qantity_product = null ;
-        /* (string) $price = $totalPrixLivraison = $qantity_product = null ; */
+        $weight_negatif=[];
+        (double) $poid = $totalLivraison = $quantity_product = null ;
+        (double) $price = $totalPrixLivraison = $quantity_product = null ;
 
         $cart=$cart->getFull();
         foreach($cart as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
-            $qantity_product+=$element['quantity'];
+            $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
         }
 
         $priceList=$this->fillPriceList($weight);
-        //dump($priceList,$poid);
-        $execpt=["0.25","0.5","0.75"];
+        dump($priceList);
+        dd($poid, $totalLivraison=$priceList[ $poid]);
+        /* dd($price, $totalPrixLivraison=$priceList[ $price]); */
+        
+        //$execpt=["0.25","0.5","0.75"];
 
         /* for($i=0.01;$i<=0.99;$i++){
-            $expp[]=$i;
+            $weight_negatif[]=$i;
         } */
         for($x = 0.01; $x < 1; $x = $x +0.01){
-            $expp[]=$x;
+            $weight_negatif[]=$x;
         }
         
-        //dd($expp);
+        //dd($weight_negatif);
 
-        if(!is_null($poid)){ // si le poit il est pas null 
-           // dd('first',$priceList,$poid);
+        if(!is_null($poid)){ // si le poid n'est pas null 
+            //dd('first', $priceList,$poid, $price);
+            //dd($totalPrixLivraison);
 
-            if(is_string($poid) || in_array($poid,$expp)){
+            if(is_string($poid) || in_array($poid,$weight_negatif)){
                 $poid=(double) $poid;
-                /* $price=(string) $price; */
+                /* $price=(double) $price; */
 
-                if(in_array($poid,$expp)){
+                if(in_array($poid,$weight_negatif)){
                     $totalLivraison=$priceList[(string)$poid];
                     /* $totalPrixLivraison=$priceList[$price]; */
                 }
 
 
-
             }else{
                // dd('second',$priceList,$poid);
-                if(in_array($poid,$expp)){
+                if(in_array($poid,$weight_negatif)){
                 $totalLivraison=$priceList[$poid];
                 /* $totalPrixLivraison=$priceList[$price]; */
             }
@@ -86,7 +89,7 @@ class CartController extends AbstractController
        //if(is_string($poid))
        
         //$totalLivraison=$priceList[ $poid];
-        //$totalPrixLivraison=$priceList[ $poid];
+        /* $totalPrixLivraison=$priceList[ $price]; */
         /* dump($priceList);
         dd($totalLivraison); */
 
@@ -94,8 +97,8 @@ class CartController extends AbstractController
             'cart' => $cart,
             'categories' => $categories,
             'poid' => $poid,
-            'qantity_product' => $qantity_product,
-            /* 'totalPrixLivraison' => $totalPrixLivraison, */
+            'quantity_product' => $quantity_product,
+            'totalPrixLivraison' => $totalPrixLivraison,
             'totalLivraison' => $totalLivraison ?: null
         ]);
     }
