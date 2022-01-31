@@ -45,10 +45,11 @@ class CartController extends AbstractController
         }
 
         $priceList=$this->fillPriceList($weight);
-        /* dump($priceList); */
-        /* dd($poid, $totalLivraison=$priceList[ $poid]); */
         $price = $priceList[ $poid];
-        /* dd($price);  */
+        /* dump('princeList', $priceList);
+        dump('poid et price', $poid, $totalLivraison=$priceList[ $poid]);
+        dump('poid', $poid);
+        dd('price', $price);  */
         /* dd($price, $totalPrixLivraison=$priceList[ $price]); */
         
         //$execpt=["0.25","0.5","0.75"];

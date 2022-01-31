@@ -65,7 +65,7 @@
                     <b>Nombre de produits :</b> {{ (quantity_product) }}</br>
                     <b>Prix de mon panier :</b> {{ (prix_total_article / 100)|number_format(2, ',','.') }} € </br>
                     <b>Prix livraison :</b> {{ (poid)|number_format(2, ',','.') }} kg = {{ (price)|number_format(2, ',','.') }} € </br>
-                    <b>Prix Total :</b> {{ ((prix_total_article / 100 ) + totalLivraison)|number_format(2, ',','.') }} € 
+                    <b>Prix Total :</b> {{ ((prix_total_article / 100 ) + price)|number_format(2, ',','.') }} € 
                     <a href="{{ path('order') }}" class="btn btn-success btn-block">Valider mon panier</a>
                 </div>
             {% else %}
