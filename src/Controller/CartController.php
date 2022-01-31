@@ -45,8 +45,10 @@ class CartController extends AbstractController
         }
 
         $priceList=$this->fillPriceList($weight);
-        dump($priceList);
-        dd($poid, $totalLivraison=$priceList[ $poid]);
+        /* dump($priceList); */
+        /* dd($poid, $totalLivraison=$priceList[ $poid]); */
+        $price = $priceList[ $poid];
+        /* dd($price);  */
         /* dd($price, $totalPrixLivraison=$priceList[ $price]); */
         
         //$execpt=["0.25","0.5","0.75"];
@@ -64,13 +66,13 @@ class CartController extends AbstractController
             //dd('first', $priceList,$poid, $price);
             //dd($totalPrixLivraison);
 
-            if(is_string($poid) || in_array($poid,$weight_negatif)){
+            if(is_string($poid or $price) || in_array($poid,$weight_negatif)){
                 $poid=(double) $poid;
-                /* $price=(double) $price; */
+                $price=(double) $price;
 
                 if(in_array($poid,$weight_negatif)){
                     $totalLivraison=$priceList[(string)$poid];
-                    /* $totalPrixLivraison=$priceList[$price]; */
+                    /* $totalPrixLivraison=$priceList[(string)$price]; */
                 }
 
 
@@ -97,8 +99,9 @@ class CartController extends AbstractController
             'cart' => $cart,
             'categories' => $categories,
             'poid' => $poid,
+            'price' => $price,
             'quantity_product' => $quantity_product,
-            'totalPrixLivraison' => $totalPrixLivraison,
+            'totalPrixLivraison' => $totalPrixLivraison ?: null,
             'totalLivraison' => $totalLivraison ?: null
         ]);
     }
