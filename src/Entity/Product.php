@@ -61,6 +61,11 @@ class Product
     private $price;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $stock;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isBest;
@@ -139,6 +144,18 @@ class Product
         return $this;
     }
 
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+    
     public function getCategory(): ?Category
     {
         return $this->category;

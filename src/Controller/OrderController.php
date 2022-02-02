@@ -121,6 +121,13 @@ class OrderController extends AbstractController
                     $orderDetails->setPrice($element['product']->getPrice());
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
     
+                    // PREPARATION DU STOCKAGE AUTOMATIQUE APRES COMMANDE
+                    // $orderedList[]=[
+                    //     "Id" => $element["product"]->getId(),
+                    //     "Quantity" => $element["quantity"],
+                    //     "OrderDetails" => $orderDetails,
+                    // ];
+                    
                     $this->entityManager->persist($orderDetails);
                 }   
 
