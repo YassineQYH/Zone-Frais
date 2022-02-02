@@ -34,7 +34,6 @@ class CartController extends AbstractController
 
         /* dd($weight->findByKgPrice(0.7)->getPrice()); */
         
-
         $categories = $category->findAll();
         $weight_negatif=[];
         (double) $poid = $totalLivraison = $quantity_product = null ;
@@ -51,14 +50,7 @@ class CartController extends AbstractController
         $prix=$weight->findByKgPrice($poid)->getPrice();
 
         /* dd($prix); */
-        /* $priceList=$this->fillPriceList($weight);
-        $price = $priceList[ $poid]; */
-        
-        /* dump('princeList', $priceList);
-        dd('poid', (float)$poid); */
-        /* dd('price', $price);  */
-        /* dd($price, $totalPrixLivraison=$priceList[ $price]); */
-        
+
         //$execpt=["0.25","0.5","0.75"];
 
         /* for($i=0.01;$i<=0.99;$i++){
@@ -67,21 +59,7 @@ class CartController extends AbstractController
         for($x = 0.01; $x < 1; $x = $x +0.01){
             $weight_negatif[]=$x;
         }
-        
         //dd($weight_negatif);
-
-            
-        
-
-        /* dump($poid);
-        dump($priceList);die; */
-       // dd(in_array($poid,$execpt));
-       //if(is_string($poid))
-       
-        //$totalLivraison=$priceList[ $poid];
-        /* $totalPrixLivraison=$priceList[ $price]; */
-        /* dump($priceList);
-        dd($totalLivraison); */
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
@@ -102,15 +80,6 @@ class CartController extends AbstractController
            $priceList[(string) $item->getKg()]=$item->getPrice();
         }  
 
-      
-/*         $myNonFormatedFloat = 0.25;
-        $myGermanNumber = number_format($myNonFormatedFloat, 2, ',', '.'); // -> 5.678,90
-        $myAngloSaxonianNumber = number_format($myNonFormatedFloat, 2, '.', ','); // -> 5,678.90
-
-        dump($myGermanNumber);
-        dd($myAngloSaxonianNumber); */
-
-
         return $priceList;         
          //dd( (double) ($priceList["0.75"]));
     }
@@ -129,7 +98,7 @@ class CartController extends AbstractController
         //return $this->redirectToRoute('add_to_cart', ['id' => 17 ]);
         return $this->redirect($_SERVER['HTTP_REFERER']);
 
-//return $this->redirectToRoute(['add_to_cart' : ]);
+        //return $this->redirectToRoute(['add_to_cart' : ]);
         // return $notification;
     }
 
