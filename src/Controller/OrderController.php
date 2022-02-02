@@ -74,13 +74,16 @@ class OrderController extends AbstractController
             $poid+=$poidAndQantity;
         }
 
+        $prix=$weight->findByKgPrice($poid)->getPrice();
+
         $priceList=$this->fillPriceList($weight);
-        $totalLivraison=$priceList[$poid];
+        /* $totalLivraison=$priceList[$poid]; */
 
             $form->handleRequest($request); /* Pour dire au formulaire : écoute la requête s'il te plait. */
 
             if ($form->isSubmitted() && $form->isValid()) {
                 //dd($form->getData());
+                
 
                 $date = new DateTime();
                 /* $carriers = $form->get('carriers')->getData(); */
@@ -102,7 +105,7 @@ class OrderController extends AbstractController
                     $order->setReference($reference);
                     $order->setUser($this->getUser());
                     $order->setCreatedAt($date);
-                    $order->setCarrierPrice($totalLivraison * 100);
+                    $order->setCarrierPrice($prix);
                     /* foreach ($cart->getFull() as $element) {
                         $order->setTotalPrice( (($element['product']->getPrice() * $element['quantity']) + (3)) );
                     } */
@@ -133,7 +136,6 @@ class OrderController extends AbstractController
 
 
 
-
                 $this->entityManager->flush();
 
                 return $this->render('order/add.html.twig', [
@@ -141,7 +143,8 @@ class OrderController extends AbstractController
                     /* 'carrier' => $carriers, */
                     'delivery' => $delivery_content,
                     'reference' => $order->getReference(),
-                    'totalLivraison' => $totalLivraison,
+                    'price' => $prix,
+                    'totalLivraison' =>  null,
                     'categories' => $categories
                 ]);
             }

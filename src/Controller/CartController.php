@@ -67,7 +67,6 @@ class CartController extends AbstractController
             'poid' => $poid,
             'price' => $prix,
             'quantity_product' => $quantity_product,
-            'totalPrixLivraison' => $totalPrixLivraison ?: null,
             'totalLivraison' => $totalLivraison ?: null
         ]);
     }

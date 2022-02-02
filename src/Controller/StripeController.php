@@ -20,6 +20,7 @@ class StripeController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager, Cart $cart, $reference)
     {
+       
         $product_for_stripe = [];
         $YOUR_DOMAIN = 'http://127.0.0.1:8000';
         
@@ -43,11 +44,12 @@ class StripeController extends AbstractController
                 'quantity' => $product->getQuantity(),
             ];
         }
+       // dd($order->getCarrierPrice());
 
         $product_for_stripe[] = [
             'price_data' => [
                 'currency' => 'eur',
-                'unit_amount' => $order->getCarrierPrice(),
+                'unit_amount' => $order->getCarrierPrice() *100 ,
                 'product_data' => [
                     'name' => 'Livraison',
                     'images' => [$YOUR_DOMAIN],/* On peut rajouter une image par exemple Colissimo, une icone de trasnporteur etc */
