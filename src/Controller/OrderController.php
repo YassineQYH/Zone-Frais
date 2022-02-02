@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Classe\Cart;
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Entity\Weight;
 use App\Form\OrderType;
 use App\Entity\OrderDetails;
@@ -14,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class OrderController extends AbstractController
 {
@@ -114,6 +116,7 @@ class OrderController extends AbstractController
 
                     $this->entityManager->persist($order);
 
+                    /* dd($cart->getFull()); */
                 // Enregistrer mes produits OrderDetails()
                 foreach ($cart->getFull() as $element) {
                     $orderDetails = new OrderDetails();
@@ -123,18 +126,47 @@ class OrderController extends AbstractController
                     $orderDetails->setQuantity($element['quantity']);
                     $orderDetails->setPrice($element['product']->getPrice());
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
-    
-                    // PREPARATION DU STOCKAGE AUTOMATIQUE APRES COMMANDE
-                    // $orderedList[]=[
-                    //     "Id" => $element["product"]->getId(),
-                    //     "Quantity" => $element["quantity"],
-                    //     "OrderDetails" => $orderDetails,
-                    // ];
                     
                     $this->entityManager->persist($orderDetails);
+
+                    $id=$element['product']->getId();
+                    $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
+                    $getProductStockById = $repo[0]->getStock();
+
+                    $getProductQtyCart =$element['quantity'];
+                    $result = $getProductStockById - $getProductQtyCart;
+                    $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
+                    $query =  $this->entityManager->createQuery($dql);
+                    $query->execute();
+
                 }   
 
+                /* $id=5;
+                // tu as dans le panier cette quantité
+                $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
+                $getProductStockById = $repo[0]->getStock();
 
+               // dd($getProductStockById[0]->getStock());
+
+               // todo tu requpére la quantité depuis la cart et tu le met dans la variable getProductQtyCart
+                $getProductQtyCart = 2;
+                $result = $getProductStockById - $getProductQtyCart;
+
+                $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
+                $query =  $this->entityManager->createQuery($dql);
+                $query->execute(); */
+
+
+                /* $queryBuilder = $this->entityManager->createQueryBuilder();
+                $query = $queryBuilder->update('product', 'p')
+                        ->set('p.stock', ':stock')
+                        ->where('p.id = :id')
+                        ->setParameter('stock', 3)
+                        ->setParameter('id', 5)
+                        ->getQuery();
+                        dd($query->execute());
+                $result = $query->execute(); */
+                /* UPDATE product p SET p.stock = :stock WHERE p.id = :id */
 
                 $this->entityManager->flush();
 
