@@ -129,7 +129,7 @@ class OrderController extends AbstractController
                     
                     $this->entityManager->persist($orderDetails);
 
-                    $id=$element['product']->getId();
+/*                     $id=$element['product']->getId();
                     $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
                     $getProductStockById = $repo[0]->getStock();
 
@@ -137,7 +137,7 @@ class OrderController extends AbstractController
                     $result = $getProductStockById - $getProductQtyCart;
                     $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
                     $query =  $this->entityManager->createQuery($dql);
-                    $query->execute();
+                    $query->execute(); */
 
                 }   
 

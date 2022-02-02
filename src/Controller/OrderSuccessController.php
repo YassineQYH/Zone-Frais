@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,21 @@ class OrderSuccessController extends AbstractController
      */
     public function index(Cart $cart, $stripeSessionId, CategoryRepository $category)
     {
+
+        /* Gestion automatique du stock */
+        foreach ($cart->getFull() as $element) {
+
+            $id=$element['product']->getId();
+            $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
+            $getProductStockById = $repo[0]->getStock();
+
+            $getProductQtyCart =$element['quantity'];
+            $result = $getProductStockById - $getProductQtyCart;
+            $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
+            $query =  $this->entityManager->createQuery($dql);
+            $query->execute();
+        }   
+
         $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
 
@@ -52,6 +68,8 @@ class OrderSuccessController extends AbstractController
             ";
             $mail->send('admin@sy-shop.yassine-qayouh-dev.com', '', '', $content);
         }
+
+
 
         return $this->render('order_success/index.html.twig', [
             'order' => $order,
