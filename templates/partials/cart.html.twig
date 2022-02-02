@@ -6,7 +6,7 @@
     <div class="navbar-cart-product-wrapper">
         {% set total = null %}
         {# {% for item in cart.full %} #}
-        {% for item in cart %}
+        {% for item in cart.full %}
         
         <div class="navbar-cart-product">
             <div class="w-100">
@@ -16,7 +16,7 @@
                         </a>    
                     </div>
                     <div class="col-md-6 my-auto">
-                        <img src="/uploads/{{ item.product.illustration }}" alt="{{ item.product.name }}" height="75px">
+                        <img src="/uploads/{{ item.product.image }}" alt="{{ item.product.name }}" height="75px">
                     </div>
                     <div class="col-md-6">
                         {% for element in cart.full %}
