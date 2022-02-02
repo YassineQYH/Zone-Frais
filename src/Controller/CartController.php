@@ -31,25 +31,32 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
+
+        /* dd($weight->findByKgPrice(0.7)->getPrice()); */
         
+
         $categories = $category->findAll();
         $weight_negatif=[];
         (double) $poid = $totalLivraison = $quantity_product = null ;
         (double) $price = $totalPrixLivraison = $quantity_product = null ;
 
         $cart=$cart->getFull();
+
         foreach($cart as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
             $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
         }
 
-        $priceList=$this->fillPriceList($weight);
-        $price = $priceList[ $poid];
+        $prix=$weight->findByKgPrice($poid)->getPrice();
+
+        /* dd($prix); */
+        /* $priceList=$this->fillPriceList($weight);
+        $price = $priceList[ $poid]; */
+        
         /* dump('princeList', $priceList);
-        dump('poid et price', $poid, $totalLivraison=$priceList[ $poid]);
-        dump('poid', $poid);
-        dd('price', $price);  */
+        dd('poid', (float)$poid); */
+        /* dd('price', $price);  */
         /* dd($price, $totalPrixLivraison=$priceList[ $price]); */
         
         //$execpt=["0.25","0.5","0.75"];
@@ -63,28 +70,8 @@ class CartController extends AbstractController
         
         //dd($weight_negatif);
 
-        if(!is_null($poid)){ // si le poid n'est pas null 
-            //dd('first', $priceList,$poid, $price);
-            //dd($totalPrixLivraison);
-
-            if(is_string($poid or $price) || in_array($poid,$weight_negatif)){
-                $poid=(double) $poid;
-                $price=(double) $price;
-
-                if(in_array($poid,$weight_negatif)){
-                    $totalLivraison=$priceList[(string)$poid];
-                    /* $totalPrixLivraison=$priceList[(string)$price]; */
-                }
-
-
-            }else{
-               // dd('second',$priceList,$poid);
-                if(in_array($poid,$weight_negatif)){
-                $totalLivraison=$priceList[$poid];
-                /* $totalPrixLivraison=$priceList[$price]; */
-            }
-            }
-        }
+            
+        
 
         /* dump($poid);
         dump($priceList);die; */
@@ -100,7 +87,7 @@ class CartController extends AbstractController
             'cart' => $cart,
             'categories' => $categories,
             'poid' => $poid,
-            'price' => $price,
+            'price' => $prix,
             'quantity_product' => $quantity_product,
             'totalPrixLivraison' => $totalPrixLivraison ?: null,
             'totalLivraison' => $totalLivraison ?: null

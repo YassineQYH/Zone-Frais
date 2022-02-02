@@ -19,22 +19,25 @@ class WeightRepository extends ServiceEntityRepository
         parent::__construct($registry, Weight::class);
     }
 
-    // /**
-    //  * @return Weight[] Returns an array of Weight objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByKgPrice($poid)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+        try{
+            return $this->createQueryBuilder('w')
+            /* ->select('w.price') */
+            ->andWhere('w.kg <= :poid')
+            ->setParameter('poid', $poid)
+            ->orderBy('w.kg', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
+            ->getSingleResult()
         ;
+        }catch(\Exception $e){
+            return new Weight();
+        }
+
     }
-    */
+    /* select price from weight where kg < 5.7 order by kg DESC limit 1;  */
 
     /*
     public function findOneBySomeField($value): ?Weight
