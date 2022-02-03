@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connection à Pergolazur{% endblock %}
+
+{% block stylesheets %}
+    {# Icone réseaux Sociaux #}
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />   
+    {# fas fa-xxx #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" /> 
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" >
+    <!-- Font Awesome -->
+    <!-- Footer -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PV1GOfQNHSoD2xbE+QkPxCAF1NEevoEH3S10sibvcOQVnN" crossorigin="anonymous">
+    <!-- Home-section -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- Glidejs | Show product slider-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css" />
+
+  <link rel="stylesheet" href="{{ asset('assets/css/nav.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <!-- Container -->
+    <div class="container container-login" id="container">
+      <!-- Row -->
+      <div class="row">
+        <!-- Sign Up -->
+        <div class="col align-center flex-col sign-up">
+          {# <div class="form-wrapper">
+            <div class="social-list align-center sign-up">
+              <div class="align-center facebook-bg">
+                <i class="bx bxl-facebook"></i>
+              </div>
+              <div class="align-center google-bg">
+                <i class="bx bxl-google"></i>
+              </div>
+              <div class="align-center twitter-bg">
+                <i class="bx bxl-twitter"></i>
+              </div>
+              <div class="align-center insta-bg">
+                <i class="bx bxl-instagram-alt"></i>
+              </div>
+            </div>
+          </div> #}
+        </div>
+        <!-- End Sign Up -->
+        <!-- Sign In -->
+        {% if app.user %}
+        <div class="col align-center flex-col sign-in sign-in-connecter">
+          <div class="form-wrapper align-center">
+            <div class="form sign-in">
+              <button> <a href="{{ path('admin') }}">Accéder au back-Office</a> </button>
+            </div>
+          </div> <br>
+          <div class="form-wrapper align-center">
+            <div class="form sign-in">
+              <button> <a href="{{ path('app_logout') }}">Se Déconnecter</a> </button>
+            </div>
+          </div>
+        {% else %}
+        <div class="col align-center flex-col sign-in">
+          <div class="form-wrapper align-center">
+            <div class="form sign-in">
+              <div class="input-group">
+                <i class="bx bxs-user"></i>
+                <input type="email" placeholder="E-mail" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-lock-alt"></i>
+                <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required />
+              </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+              <button type="submit">Se connecter</button>
+            </div>
+          </div>
+        {% endif %}
+
+          <div class="form-wrapper">
+            <div class="social-list align-center sign-in">
+
+              <div class="align-center facebook-bg">
+                  <a href="https://www.facebook.com/" target="blank" class="bx bxl-facebook"></a>
+              </div>
+
+              <div class="align-center google-bg">
+                <a href="https://www.google.com/" target="blank" class="bx bxl-google"></a>
+              </div>
+
+              <div class="align-center twitter-bg">
+                <a href="https://www.twitter.com/" target="blank" class="bx bxl-twitter"></a>
+              </div>
+
+              <div class="align-center insta-bg">
+                <a href="https://www.instagram.com/" target="blank" class="bx bxl-instagram-alt"></a>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- End Sign In -->
+      </div>
+      <!-- End Row -->
+      <!-- Content Section -->
+      <div class="row content-row">
+        <!-- Sign In Content -->
+        <div class="col align-items flex-col">
+
+
+        {% if app.user %}
+
+          
+          <div class="text sign-in">
+          {# <p class="bouton-acces-admin-deco"><b><a href="{{ path('app_logout') }}">Déconnexion</a></b></p> #}
+            <h2>Bon retour {{ app.user.lastname }} {{ app.user.firstname }}</h2>
+            {# <p class="bouton-acces-admin-deco">Tu peux Accéder au <b><a href="{{ path('admin') }}">BackOffice</a></b></p> #}
+          </div>
+
+        {% else %}
+
+          <div class="text sign-in login-text-bureau">
+            <h2>Veuillez vous connecter</h2>
+            <div class="separateur"></div>
+          </div>
+
+          <div class="text sign-in login-text-mobile">
+            <h2>Veuillez vous connecter</h2>
+            <div class="separateur"></div>
+          </div>
+
+        {% endif %}
+
+          <div class="img sign-in">
+            <img src="{{ asset('assets/img-login/bg1.svg') }}" alt="" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Container -->
+  </form>
+
+    <!-- Script -->
+    <script type="text/javascript" src="{{ asset('assets/js/login.js') }}"></script>
+{% endblock %}
+
