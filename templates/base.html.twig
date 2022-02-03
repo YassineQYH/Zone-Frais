@@ -83,6 +83,44 @@
             {# caroussel d'un produit #}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
             <script src="{{ asset('assets/js/slider-show-product.js') }}" type="text/javascript"></script>
+
+            <script src="{{ asset('assets/js/login-register.js') }}" type="text/javascript"></script>
+
+            <!-- Hidden MDP LOGIN -->
+            <script>
+                $(document).ready(function(){
+                    $('.show-password-login').on('click', function() {
+                        if($(this).text() == 'Afficher')
+                        {
+                            $(this).text("Cacher").add($('#inputPassword').attr('type', 'text'));
+                        }
+                        else
+                        {
+                            $(this).text("Afficher").add($('#inputPassword').attr('type', 'password'));
+                        }
+                    });
+                });
+            </script>
+            
+            <!-- Hidden MDP REGISTER -->
+            <script>
+                $(document).ready(function(){
+                    $('.show-password,.show-password-retype').click(function() {
+                        var clickedbtn=(event.target.className);
+                        var classe=null;
+                        var classe =(clickedbtn === "show-password") ? classe="#register_password_first" : classe="#register_password_second" ;
+
+                        if($(this).text() == 'cacher')
+                        {
+                            $(this).text("afficher").add($(classe).attr('type', 'password'));
+                        }
+                        else
+                        {
+                            $(this).text("cacher").add($(classe).attr('type', 'text'));
+                        }
+                    });
+                });
+            </script>
         {% endblock %}
         
     </body>

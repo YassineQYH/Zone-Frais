@@ -310,3 +310,39 @@
 	-webkit-transform:translate3d(0, 0, 0);
 			transform:translate3d(0, 0, 0);
   }
+
+  /* Show-Hidden Password */
+.show-password-login {
+    font-size: 9px;
+    text-transform: uppercase;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 80px;
+    margin-top: -25px;
+}
+.show-password {
+    font-size: 9px;
+    text-transform: uppercase;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 500px;
+    margin-top: -45px;
+}
+
+.show-password-retype {
+    font-size: 9px;
+    text-transform: uppercase;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 500px;
+    margin-top: -25px;
+}
+
+/* .show-pwd {
+    font-size: 9px;
+    text-transform: uppercase;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 550px;
+    margin-top: -25px;
+} */
