@@ -74,6 +74,10 @@
                             </ul>
                         </div>
                     {% else %}
+                        {% if notification %}
+                            <div class="alert alert-info">{{ notification }}</div>
+                            <hr>
+                        {% endif %}
                         <h2>Se Connecter</h2>
                         <label>
                             <label for="inputEmail">Votre Email</label>
