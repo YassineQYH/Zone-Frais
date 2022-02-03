@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon panier{% endblock %}
+{% block title %}Connexion : Zone-Frais{% endblock %}
 
 {% form_theme form 'form/formRegister.html.twig' %}
 
@@ -40,104 +40,105 @@
         <div class="cont">
             <form method="post">
                 <div class="form sign-in">
-                {% if is_granted('ROLE_ADMIN') %}
-                    <h2>Bon retour  <br> {{ app.user.lastname }} {{ app.user.firstname }}</h2>
-                    <button class="submit"> <a href="{{ path('admin') }}">Accéder au back-Office</a> </button>
-                    <button class="submit"> <a href="{{ path('account_address') }}">Gérer mes adresses</a> </button>
-                    <button class="submit"> <a href="{{ path('account_order') }}">Mes commandes</a> </button>
-                    <button class="submit"> <a href="{{ path('account_password') }}">Modifier mon mot de passe</a> </button>
-                    <button class="submit"> <a href="{{ path('app_logout') }}">Se Déconnecter</button>
-                    <p class="forgot-pass"><a href="{{ path('reset_password') }}"style="color:black;" >Mot de passe oublié</a>
-				?</p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <h2>Bon retour  <br> {{ app.user.lastname }} {{ app.user.firstname }}</h2>
+                        <button class="submit"> <a href="{{ path('admin') }}">Accéder au back-Office</a> </button>
+                        <button class="submit"> <a href="{{ path('account_address') }}">Gérer mes adresses</a> </button>
+                        <button class="submit"> <a href="{{ path('account_order') }}">Mes commandes</a> </button>
+                        <button class="submit"> <a href="{{ path('account_password') }}">Modifier mon mot de passe</a> </button>
+                        <button class="submit"> <a href="{{ path('app_logout') }}">Se Déconnecter</button>
+                        <p class="forgot-pass"><a href="{{ path('reset_password') }}"style="color:black;" >Mot de passe oublié</a> ?</p>
 
+                        <div class="social-media">
+                            <ul>
+                            <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
+                            </ul>
+                        </div>
+                    {% elseif app.user %}
+                        <h2>Se Déconnecter</h2>
+                        <button class="submit"> <a href="{{ path('account_address') }}">Gérer mes adresses</a> </button>
+                        <button class="submit"> <a href="{{ path('account_order') }}">Mes commandes</a> </button>
+                        <button class="submit"> <a href="{{ path('account_password') }}">Modifier mon mot de passe</a> </button>
+                        <button class="submit"> <a href="{{ path('app_logout') }}">Se Déconnecter</button>
+                        <p class="forgot-pass"><a href="{{ path('reset_password') }}" style="color:black;">Mot de passe oublié</a> ?</p>
 
-                    <div class="social-media">
-                        <ul>
-                        <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
-                        </ul>
-                    </div>
-                {% elseif app.user %}
-                    <h2>Se Déconnecter</h2>
-                    <button class="submit"> <a href="{{ path('account_address') }}">Gérer mes adresses</a> </button>
-                    <button class="submit"> <a href="{{ path('account_order') }}">Mes commandes</a> </button>
-                    <button class="submit"> <a href="{{ path('account_password') }}">Modifier mon mot de passe</a> </button>
-                    <button class="submit"> <a href="{{ path('app_logout') }}">Se Déconnecter</button>
-                    <p class="forgot-pass"><a href="{{ path('reset_password') }}" style="color:black;">Mot de passe oublié</a> ?</p>
+                        <div class="social-media">
+                            <ul>
+                            <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
+                            </ul>
+                        </div>
+                    {% else %}
+                        <h2>Se Connecter</h2>
+                        <label>
+                            <label for="inputEmail">Votre Email</label>
+                            <input type="email" placeholder="E-mail" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        </label>
+                        <label>
+                            <label for="inputPassword">Votre mot de passe</label>
+                            <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required />
+                            <span class="show-password-login">Afficher</span>
+                        </label>
+                        
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <div class="social-media">
-                        <ul>
-                        <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
-                        </ul>
-                    </div>
-                {% else %}
-                    <h2>Se Connecter</h2>
-                    <label>
-                        <label for="inputEmail">Votre Email</label>
-                        <input type="email" placeholder="E-mail" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                    </label>
-                    <label>
-                        <label for="inputPassword">Votre mot de passe</label>
-                        <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required />
-                        <span class="show-password-login">Afficher</span>
-                    </label>
-                    
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <button class="submit" type="submit">Se connecter</button>
 
-                    <button class="submit" type="submit">Se connecter</button>
+                        <p class="forgot-pass"><a href="{{ path('reset_password') }} "style="color:black;">Mot de passe oublié</a> ?</p>
 
-                    <p class="forgot-pass"><a href="{{ path('reset_password') }} "style="color:black;">Mot de passe oublié</a> ?</p>
-
-                    <div class="social-media">
-                        <ul>
-                        <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
-                        <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
-                        </ul>
-                    </div>
-                {% endif %}
+                        <div class="social-media">
+                            <ul>
+                            <img src="{{ asset('assets/img/facebook.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/twitter.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/linkedin.png') }}" alt="" />
+                            <img src="{{ asset('assets/img/instagram.png') }}" alt="" />
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
             </form>
             {% if app.user %}
-            <div class="sub-cont">
-                <div class="img">
-                </div>
+                <div class="sub-cont">
+                    <div class="img">
+                    </div>
+                </div>   
             {% else %}
-            <div class="sub-cont">
-                <div class="img">
-                    <div class="img-text m-up">
-                    <h2>Nouveau Ici ??</h2>
-                    <p>Inscrit toi pour pouvoir passer des commandes</p>
-                    </div>
-                    <div class="img-text m-in">
-                    <h2>Tu fais déjà parti des nôtres ?</h2>
-                    <p>Si vous avez déjà un compte, ouvrez une session. Vous nous avez manqué!</p>
-                    </div>
-                    <div class="img-btn">
-                        <span class="m-up">S'inscrire</span>
-                        <span class="m-in">Se Connecter</span>
-                    </div>
-                </div>
-                <div class="form sign-up">
-                    <h2>S'enregistrer</h2>
-                    {{ form_start(form) }}
-                    {{ form_row(form.firstname) }}
-                    {{ form_row(form.lastname) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.password) }}
-                    <span class="show-password" style="margin-top: -135px!important;">Afficher</span>
-                    <span class="show-password-retype" style="margin-top: -43px!important;margin-right:300px!important;">Afficher</span>
+                <form method="post">
+                    <div class="sub-cont">
+                        <div class="img">
+                            <div class="img-text m-up">
+                            <h2>Nouveau Ici ??</h2>
+                            <p>Inscrit toi pour pouvoir passer des commandes</p>
+                            </div>
+                            <div class="img-text m-in">
+                            <h2>Tu fais déjà parti des nôtres ?</h2>
+                            <p>Si vous avez déjà un compte, ouvrez une session. Vous nous avez manqué!</p>
+                            </div>
+                            <div class="img-btn">
+                                <span class="m-up">S'inscrire</span>
+                                <span class="m-in">Se Connecter</span>
+                            </div>
+                        </div>
+                        <div class="form sign-up">
+                            <h2>S'enregistrer</h2>
+                            {{ form_start(form) }}
+                            {{ form_row(form.firstname) }}
+                            {{ form_row(form.lastname) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.password) }}
+                            <span class="show-password" style="margin-top: -135px!important;">Afficher</span>
+                            <span class="show-password-retype" style="margin-top: -43px!important;margin-right:300px!important;">Afficher</span>
 
-                    {{ form_row(form.submit) }}
-                    {{ form_end(form) }} 
-                </div>
-            </div><br><br><br>
+                            {{ form_row(form.submit) }}
+                            {{ form_end(form) }} 
+                        </div>
+                    </div>
+                </form>
             {% endif %}
         </div>
     </div> <br><br><br><br><br>
