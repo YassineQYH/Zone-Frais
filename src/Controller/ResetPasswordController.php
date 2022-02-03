@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classe\Mail;
 use App\Entity\ResetPassword;
 use App\Entity\User;
+use App\Entity\Category;
 use App\Form\ResetPasswordType;
 use App\Repository\CategoryRepository;
 use DateTime;
@@ -25,8 +26,11 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/mot-de-passe-oublie", name="reset_password")
      */
-    public function index(Request $request)
+    public function index(Request $request, CategoryRepository $category)
     {
+        
+        $categories = $category->findAll();
+
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
         }
@@ -60,7 +64,9 @@ class ResetPasswordController extends AbstractController
             }
         }
 
-        return $this->render('reset_password/index.html.twig');
+        return $this->render('reset_password/index.html.twig', [
+            'categories' => $categories
+        ]);
     }
 
     /**

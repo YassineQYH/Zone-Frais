@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Classe\Cart;
 use App\Repository\WeightRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,8 +23,9 @@ class AccountOrderController extends AbstractController
     /**
      * @Route("/compte/mes-commandes", name="account_order")
      */
-    public function index(CategoryRepository $category, WeightRepository $weight)
+    public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
+        
         $categories = $category->findAll();
 
         $orders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($this->getUser());
@@ -37,13 +39,15 @@ class AccountOrderController extends AbstractController
             $poid+=$poidAndQantity;
         }
 
+        $prix=$weight->findByKgPrice($poid)->getPrice();
         $priceList=$this->fillPriceList($weight);
-        $totalLivraison=$priceList[$poid];
+        /* $totalLivraison=$priceList[$poid]; */
 
         return $this->render('account/order.html.twig', [
             'orders' => $orders,
             'categories' => $categories,
-            'totalLivraison' => $totalLivraison
+            'price' => $prix/* ,
+            'totalLivraison' => $totalLivraison */
         ]);
     }
 
