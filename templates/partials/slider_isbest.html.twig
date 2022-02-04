@@ -20,17 +20,19 @@
                   <div class="detail-box">
                     <!-- type -->
                     <div class="type">
-                      <a href="{{ path('produit', { 'slug' : item.slug } ) }}">{{ item.name }}</a>
+                      <p href="{{ path('produit', { 'slug' : item.slug } ) }}">{{ item.name }}</p>
                       <span>{{ (item.price / 100)|number_format(2, ',','.') }} €</span>
-                    </div>
-                    {% if item.stock < 1 %}
+                    </div>                     
+                    {% if item.stock == cart[0]["quantity"] %}
+                        <a class="buy-btn">Max</a>
+                    {% elseif item.stock < 1 %}
                       <a class="buy-btn">Bientôt de retour</a>
-                    {% else %}
+                    {% elseif item.stock > 1 %}
                       <a href="{{ path('add_to_cart', {'id' : item.id } ) }}" class="buy-btn">Ajouter</a>
                     {% endif %}
                   </div>
                 </div>
-            </li>
+            </li>{# {{ dump(cart[0].quantity) }} #}
           {% endfor %}
         </ul>
       </div>

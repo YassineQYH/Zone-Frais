@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Header;
 use App\Entity\Product;
-use App\Form\ContactType;
 use App\Entity\Category;
+use App\Form\ContactType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +28,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, CategoryRepository $category)
+    public function index(Request $request, CategoryRepository $category, Cart $cart)
     {        
+        $cart=$cart->getFull();
+
         $form = $this->createForm(ContactType::class);
         
         $headers = $this->entityManager->getRepository(Header::class)->findAll();
@@ -63,7 +66,8 @@ class HomeController extends AbstractController
             'categories' => $categories,
             'products' => $products,
             'categorys' => $categorys,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'cart' => $cart,
         ]);
     }
 }

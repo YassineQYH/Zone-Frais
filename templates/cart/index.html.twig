@@ -44,9 +44,15 @@
                                         <img src="{{ asset('assets/img/less.png') }}" height="12px" style="color:blue"; alt="-">
                                     </a>
                                     <small>x</small> {{ item.quantity }}
+                                    {% if item.product.stock <= item.quantity %}
+                                    <a style="color:red;">
+                                        Max <span>(rupture)</span>
+                                    </a>
+                                    {% else %}
                                     <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}">
                                         <img src="{{ asset('assets/img/more.png') }}" height="12px" style="color:blue"; alt="+">
                                     </a>
+                                    {% endif %}
                                 </td>
                                 <td>{{ (item.product.price / 100)|number_format(2, ',','.') }} €</td>
                                 <td>{{ ((item.product.price * item.quantity) / 100)|number_format(2, ',','.') }} €</td>
