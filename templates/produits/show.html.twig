@@ -61,7 +61,7 @@
                         necessitatibus incidunt aut ducimus, quis, veritatis
                         cum dolore tempora? Corporis, nostrum alias.
                       </p>
-                      {% if product.stock < 0 %}
+                      {% if product.stock < 1 %}
                         <p style="color:red;">Bientôt de retour !</p>
                       {% else %}
                         <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
