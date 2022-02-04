@@ -23,7 +23,11 @@
                       <a href="{{ path('produit', { 'slug' : item.slug } ) }}">{{ item.name }}</a>
                       <span>{{ (item.price / 100)|number_format(2, ',','.') }} €</span>
                     </div>
-                    <a href="{{ path('add_to_cart', {'id' : item.id } ) }}" class="buy-btn">Ajouter</a>
+                    {% if item.stock < 1 %}
+                      <a class="buy-btn">Bientôt de retour</a>
+                    {% else %}
+                      <a href="{{ path('add_to_cart', {'id' : item.id } ) }}" class="buy-btn">Ajouter</a>
+                    {% endif %}
                   </div>
                 </div>
             </li>

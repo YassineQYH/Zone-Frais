@@ -19,7 +19,7 @@ a .slider {
 }
 
 .box {
-    width: 550px;
+    width: 320px;
     box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     overflow: hidden;
@@ -35,7 +35,7 @@ a .slider {
 }
 
 .slide-img {
-    height: 350px;
+    height: 300px;
     position: relative;
 }
 
@@ -105,6 +105,9 @@ a .slider {
     color: #ffffff;
     background-color: #5a76fd;
     transition: all ease 0.3s;
+}
+.buy-btn-list {
+    margin-left: 320px;
 }
 
 .overlay {
