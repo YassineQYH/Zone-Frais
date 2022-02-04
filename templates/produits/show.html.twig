@@ -61,9 +61,13 @@
                         necessitatibus incidunt aut ducimus, quis, veritatis
                         cum dolore tempora? Corporis, nostrum alias.
                       </p>
-                      <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
-                        <input type="submit" class="addCart" value="Ajouter"/>
-                      </form>
+                      {% if product.stock < 0 %}
+                        <p style="color:red;">Bientôt de retour !</p>
+                      {% else %}
+                        <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
+                          <input type="submit" class="addCart" value="Ajouter"/>
+                        </form>
+                      {% endif %}
                     </div>
                   </div>
                 </div>

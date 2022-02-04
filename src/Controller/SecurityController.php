@@ -3,19 +3,19 @@
 namespace App\Controller;
 
 use App\Classe\Mail;
+use App\Entity\Category;
 use App\Entity\User;
 use App\Form\RegisterType;
-use App\Entity\Category;
-use App\Repository\ProductRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryRepository;
-use Symfony\Component\HttpFoundation\Response;
-use App\Repository\CategoryAccessoryRepository;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {
@@ -32,8 +32,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(CategoryRepository $category, AuthenticationUtils $authenticationUtils, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder): Response
     {
+        /* Pour la nav */
         $categories = $category->findAll();
         
         /* Login */
