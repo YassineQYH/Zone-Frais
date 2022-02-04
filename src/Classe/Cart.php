@@ -94,5 +94,6 @@ class Cart
             }
         }   /* dump($cartComplete); */
         return $cartComplete;
+        /* $query->getSingleResult(); */
     }
 }

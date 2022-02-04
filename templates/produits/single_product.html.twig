@@ -1,6 +1,13 @@
-<div class="container-pergo-list pergo-list-center">
+<div class="detail-box">
+    <div class="type">
         <div class="pergo-list-box" data-aos="fade" data-aos-duration="2000">
+            <p>{{ item.name }} <span>{{ (item.price / 100)|number_format(2, ',','.') }} €</span> </p>
             <a href="{{ path('produit', { 'slug' : item.slug } ) }}"> <img src="/uploads/{{ item.image }}" alt="" /></a>
-            <p>Titre : {{ item.name }}</p>
+            <p>{# Titre : {{ item.name }}  #}
+                
+                <a href="{{ path('produit', { 'slug' : item.slug } ) }}" class="buy-btn buy-btn-list">Voir</a>
+                {# <a href="{{ path('add_to_cart', {'id' : item.id } ) }}" class="buy-btn buy-btn-list">Ajouter</a> #}
+            </p>
         </div>
+    </div>
 </div>

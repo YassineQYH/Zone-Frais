@@ -40,20 +40,10 @@
 
         
         <div class="container-pergo-list pergo-list-center">
-            {%for item in products %}
-                <div class="detail-box">
-                    <div class="type">
-                        <div class="pergo-list-box" data-aos="fade" data-aos-duration="2000">
-                        <p>{{ item.name }} <span>{{ (item.price / 100)|number_format(2, ',','.') }} €</span> </p>
-                            <a href="{{ path('produit', { 'slug' : item.slug } ) }}"> <img src="/uploads/{{ item.image }}" alt="" /></a>
-                            <p>{# Titre : {{ item.name }}  #}
-                                
-                                <a href="{{ path('add_to_cart', {'id' : item.id } ) }}" class="buy-btn buy-btn-list">Ajouter</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
+            {% for item in products %}
+                <div class="col-xs-12 col-sm-6 col-md-6 col-xl-4">
+                    {% include 'produits/single_product.html.twig' %}
+                </div>        
             {% endfor %}
         </div style="color:black;">{{ knp_pagination_render(products) }}
     </section>

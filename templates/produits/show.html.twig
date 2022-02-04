@@ -65,7 +65,7 @@
                         <p style="color:red;">Bientôt de retour !</p>
                       {% else %}
                         <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
-                          <input type="submit" class="addCart" value="Ajouter"/>
+                          <input type="submit" class="addCart buy-btn buy-btn-list" value="Ajouter au panier"/>
                         </form>
                       {% endif %}
                     </div>
