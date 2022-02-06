@@ -61,13 +61,67 @@
                         necessitatibus incidunt aut ducimus, quis, veritatis
                         cum dolore tempora? Corporis, nostrum alias.
                       </p>
-                      {% if product.stock < 1 %}
-                        <p style="color:red;">Bientôt de retour !</p>
+
+
+{# {{dump((cart.get('data')) is empty )}}
+
+
+{% if cart.get('data') is empty %}
+    the array is empty
+{% endif %} #}
+
+                      {% if (product.stock < 1) %}
+                        <a class="buy-btn">Bientôt de retour</a>
+
+                      {% elseif (cart.get('data') is empty ) %}
+                        <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                          Ajouter
+                        </a> <br> 
+
+                      {% elseif cart.get('data')[product.id] < product.stock %}
+                        <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                          Ajouter
+                        </a> <br> 
                       {% else %}
-                        <form action="{{ path('add_to_cart', {'id' : product.id }) }}" method="POST" class="forme">
-                          <input type="submit" class="addCart buy-btn buy-btn-list" value="Ajouter au panier"/>
-                        </form>
-                      {% endif %}
+                        <a class="buy-btn">Stock Max atteint</a>
+                      {% endif %} <br>
+                      
+
+                      {# {% for item in cart.full %}
+                        
+                        {% if item.quantity == 0 %}
+
+                          <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                              Ajouter au panier
+                          </a> 
+
+
+                        {% elseif product.stock == item.quantity %} 
+
+                          <a class="buy-btn">
+                            Quantité : {{ item.quantity }}
+                          </a> <br>
+                          <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                              Diminué
+                          </a> <br>
+                          <a class="buy-btn" style="color:red;">Max(plus de stock)</a>
+
+
+                        {% elseif product.stock > item.quantity %} <br>
+                          
+                          <a class="buy-btn"> 
+                            Quantité : {{ item.quantity }}
+                          </a> <br>
+                          <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                              Enlever du panier
+                          </a> <br>
+                          <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                              Ajouter au panier
+                          </a> <br>
+
+                        {% endif %}
+                      {% endfor %} #}
+{# {{ dump(item.product.name) }}{{ dump("quantité panier", item.quantity) }}{{ dump("stock produit", product.stock) }} #}
                     </div>
                   </div>
                 </div>

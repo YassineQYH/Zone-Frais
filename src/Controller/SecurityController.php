@@ -77,12 +77,37 @@ class SecurityController extends AbstractController
             }
         }
 
+
+        /* $form1 = $this->get('form.factory')->createNamedBuilder($formTypeA, 'form1name')
+            ->add('foo', 'text')
+            ->getForm();
+ 
+        $form2 = $this->get('form.factory')->createNamedBuilder($formTypeB, 'form2name')
+            ->add('bar', 'text')
+            ->getForm();
+    
+            if('POST' === $request->getMethod()){
+ 
+                if ($request->request->has('form1name') 
+                {
+                    // handle the first form
+                }
+         
+                if ($request->request->has('form2name') 
+                {
+                    // handle the second form
+                }
+            } */
+
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername, 
             'error' => $error,
             'categories' => $categories,
             'form' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification/* ,
+            'form1' => $form1->createView(),
+            'form2' => $form2->createView() */
         ]);
     }
 

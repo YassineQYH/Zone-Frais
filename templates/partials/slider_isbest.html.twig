@@ -33,7 +33,7 @@
                     <a href="{{ path('produit', { 'slug' : item.slug } ) }}" class="buy-btn">Voir</a>
                   </div>
                 </div>
-            </li>{# {{ dump(cart[0]["quantity"]) }} #}
+            </li>{# {{ dump(cart[0]["quantity"]) }}{{ dump(cart[1]["quantity"]) }}{{ dump(cart[2]["quantity"]) }} #}
           {% endfor %}
         </ul>
       </div>

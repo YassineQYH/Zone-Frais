@@ -60,6 +60,7 @@ class CartController extends AbstractController
             $weight_negatif[]=$x;
         }
         //dd($weight_negatif);
+        
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
