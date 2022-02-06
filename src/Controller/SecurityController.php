@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
 
 
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/connexion", name="app_login")
      */
     public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder): Response
     {
