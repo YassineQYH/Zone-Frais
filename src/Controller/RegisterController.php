@@ -25,7 +25,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils)
     {
         /* Pour la nav */
         $categories = $category->findAll();
