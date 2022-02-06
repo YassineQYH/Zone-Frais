@@ -83,7 +83,7 @@
                           Ajouter
                         </a> <br> 
                       {% else %}
-                        <a class="buy-btn">Stock Max atteint</a>
+                        <a class="buy-btn">Stock Max atteint {{cart.get('data')[product.id]}} </a>
                       {% endif %} <br>
                       
 
