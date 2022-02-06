@@ -27,15 +27,20 @@ class RegisterController extends AbstractController
      */
     public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils)
     {
-                // get the login error if there is one
-                $error = $authenticationUtils->getLastAuthenticationError();
-                // last username entered by the user
-                $lastUsername = $authenticationUtils->getLastUsername();
-
-        $notification = null;
-
+        /* Pour la nav */
         $categories = $category->findAll();
+        
 
+        /* Login */
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        
+
+
+        /* Inscription */
+        $notification = null;
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
 

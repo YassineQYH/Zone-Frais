@@ -38,8 +38,6 @@ class SecurityController extends AbstractController
         $categories = $category->findAll();
         
         /* Login */
-        $category = $this->entityManager->getRepository(Category::class)->findAll();
-
         /* if ($this->getUser()) {
              return $this->redirectToRoute('account');
          } */
@@ -83,7 +81,6 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername, 
             'error' => $error,
             'categories' => $categories,
-            'category' => $category,
             'form' => $form->createView(),
             'notification' => $notification
         ]);
