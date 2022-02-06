@@ -7,10 +7,11 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
@@ -24,8 +25,13 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils)
     {
+                // get the login error if there is one
+                $error = $authenticationUtils->getLastAuthenticationError();
+                // last username entered by the user
+                $lastUsername = $authenticationUtils->getLastUsername();
+
         $notification = null;
 
         $categories = $category->findAll();
@@ -64,7 +70,9 @@ class RegisterController extends AbstractController
         return $this->render('register/register.html.twig', [
             'form' => $form->createView(),
             'notification' => $notification,
-            'categories' => $categories
+            'categories' => $categories,
+            'last_username' => $lastUsername, 
+            'error' => $error,
         ]);
     }
 }

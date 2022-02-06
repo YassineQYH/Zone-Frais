@@ -74,11 +74,11 @@
                             </ul>
                         </div>
                     {% else %}
-                        {# {% if notification %}
+                        {% if notification %}
                             <div class="alert alert-info">{{ notification }}</div>
                             <hr>
-                        {% endif %} #}
-                        {# <h2>Se Connecter</h2>
+                        {% endif %}
+                        <h2>Se Connecter</h2>
                         <label>
                             <label for="inputEmail">Votre Email</label>
                             <input type="email" placeholder="E-mail" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -91,7 +91,7 @@
                         
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                        <button class="submit" type="submit">Se connecter</button> #}
+                        <button class="submit" type="submit">Se connecter</button>
 
                         <p class="forgot-pass"><a href="{{ path('reset_password') }} "style="color:black;">Mot de passe oublié</a> ?</p>
 
