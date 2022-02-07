@@ -79,11 +79,19 @@
                         </a> <br> 
 
                       {% elseif cart.get('data')[product.id] < product.stock %}
+                        <a class="buy-btn">Quantité : {{cart.get('data')[product.id]}} </a><br>
+                        <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                          Diminué
+                        </a> <br> 
                         <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
                           Ajouter
                         </a> <br> 
                       {% else %}
-                        <a class="buy-btn">Stock Max atteint {{cart.get('data')[product.id]}} </a>
+                        <a class="buy-btn">Quantité : {{cart.get('data')[product.id]}} </a><br>
+                        <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                          Diminué
+                        </a> <br> 
+                        <a class="buy-btn" style="color:red;">Max(rupture) </a>
                       {% endif %} <br>
                       
 
