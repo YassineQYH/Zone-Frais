@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ma commandes : SY-Shop{% endblock %}
+{% block title %}Ma commandes : Zone-Frais{% endblock %}
 
-{% block content %}
+{% block content %} <br><br><br><br><br><br><br><br>
     <h1>Ma commandes {{ order.reference }}</h1>
     <a href="{{ path('account_order') }}">Retour</a>
     <hr>
@@ -25,29 +25,29 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Produit</th>
-                <th scope="col">Taille</th>
                 <th scope="col">Quantité</th>
-                <th scope="col">Prix unitaire</th>
-                <th scope="col">Total</th>
+                <th scope="col">Poids</th>
+                <th scope="col">Prix unitaire / Total</th>
             </tr>
         </thead>
         <tbody>
+        {% set prix_total_article = null %}
         {% for item in order.orderDetails %}
             <tr>
                 <td>{{ item.product }}</td>
-                <td>{{ item.size }}</td>
                 <td>x{{ item.quantity }}</td>
-                <td>{{ (item.price / 100)|number_format(2, ',', '.') }} €</td>
-                <td>{{ (item.total / 100)|number_format(2, ',', '.') }} €</td>
+                <td>{{ item.weight * item.quantity }} kg</td>
+                <td>{{ (item.price / 100)|number_format(2, ',','.') }} € / {{ (item.total / 100)|number_format(2, ',', '.') }} €</td>
+                {% set prix_total_article = prix_total_article + (item.price * item.quantity) %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <div class="text-right">
+    <div class="text-right" style="margin-right:30px;">
+    <strong>Nombre de produits :</strong> {{ (quantity_product) }}</br>
     <strong>Sous-total : </strong>{{ (order.getTotal / 100)|number_format(2, ',', '.') }} €</br>
-    <strong>Livraison : </strong>{{ (totalLivraison)|number_format(2, ',', '.') }} €</br>
-    {# <strong>Livraison : </strong>{{ (totalLivraison / 100)|number_format(2, ',', '.') }} €</br> #}
-    <strong>Total : </strong>{{ ((totalLivraison + order.getTotal) / 100)|number_format(2, ',', '.') }} €</br>
+    <strong>Prix livraison : </strong>{{ (poid)|number_format(2, ',','.') }} kg = {{ (price)|number_format(2, ',','.') }} €</br>
+    <strong>Total : </strong>{{ ((prix_total_article / 100 ) + price)|number_format(2, ',', '.') }} €</br>
     </div>
 {% endblock %}

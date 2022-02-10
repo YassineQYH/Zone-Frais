@@ -54,22 +54,26 @@ class AccountOrderController extends AbstractController
     /**
      * @Route("/compte/mes-commandes/{reference}", name="account_order_show")
      */
-    public function show($reference, CategoryRepository $category, WeightRepository $weight)
+    public function show($reference, CategoryRepository $category, WeightRepository $weight, Cart $cart)
     {
         $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByReference($reference);
 
-        (double) $poid = $qantity_product = null ;
+        /* (double) $poid = $qantity_product = null ; */
+        (double) $poid = $totalLivraison = $quantity_product = null ;
+        (double) $price = $totalPrixLivraison = $quantity_product = null ;
+        
 
         $cart=$cart->getFull();
+
         foreach($cart as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
-            $qantity_product+=$element['quantity'];
+            $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
         }
 
-        $priceList=$this->fillPriceList($weight);
-        $totalLivraison=$priceList[$poid];
+        $prix=$weight->findByKgPrice($poid)->getPrice();
+        
 
         if(!$order || $order->getUser() != $this->getUser()) {
             return $this->redirectToRoute('account_order');
@@ -78,7 +82,10 @@ class AccountOrderController extends AbstractController
         return $this->render('account/order_show.html.twig', [
             'order' => $order,
             'categories' => $categories,
-            'totalLivraison' => $totalLivraison
+            'quantity_product' => $quantity_product,
+            'poid' => $poid,
+            'price' => $prix/* ,
+            'totalLivraison' => $totalLivraison */
         ]);
     }
     
