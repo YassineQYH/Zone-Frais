@@ -49,7 +49,7 @@ class StripeController extends AbstractController
         $product_for_stripe[] = [
             'price_data' => [
                 'currency' => 'eur',
-                'unit_amount' => $order->getCarrierPrice() *100 ,
+                'unit_amount' => $order->getCarrierPrice() * 100 ,
                 'product_data' => [
                     'name' => 'Livraison',
                     'images' => [$YOUR_DOMAIN],/* On peut rajouter une image par exemple Colissimo, une icone de trasnporteur etc */

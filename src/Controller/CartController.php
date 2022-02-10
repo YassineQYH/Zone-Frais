@@ -31,10 +31,8 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
-
-        /* dd($weight->findByKgPrice(0.7)->getPrice()); */
-        
         $categories = $category->findAll();
+
         $weight_negatif=[];
         (double) $poid = $totalLivraison = $quantity_product = null ;
         (double) $price = $totalPrixLivraison = $quantity_product = null ;

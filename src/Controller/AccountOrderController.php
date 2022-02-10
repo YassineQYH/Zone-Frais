@@ -30,24 +30,23 @@ class AccountOrderController extends AbstractController
 
         $orders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($this->getUser());
 
-        (double) $poid = $qantity_product = null ;
+        (double) $poid = $totalLivraison = $quantity_product = null ;
+        (double) $price = $totalPrixLivraison = $quantity_product = null ;
 
-        $cart=$cart->getFull();
         foreach($cart as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
-            $qantity_product+=$element['quantity'];
+            $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
         }
 
         $prix=$weight->findByKgPrice($poid)->getPrice();
-        $priceList=$this->fillPriceList($weight);
-        /* $totalLivraison=$priceList[$poid]; */
 
         return $this->render('account/order.html.twig', [
             'orders' => $orders,
             'categories' => $categories,
-            'price' => $prix/* ,
-            'totalLivraison' => $totalLivraison */
+            'poid' => $poid,
+            'price' => $prix,
+            'quantity_product' => $quantity_product
         ]);
     }
 
@@ -59,7 +58,6 @@ class AccountOrderController extends AbstractController
         $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByReference($reference);
 
-        /* (double) $poid = $qantity_product = null ; */
         (double) $poid = $totalLivraison = $quantity_product = null ;
         (double) $price = $totalPrixLivraison = $quantity_product = null ;
         
@@ -84,8 +82,8 @@ class AccountOrderController extends AbstractController
             'categories' => $categories,
             'quantity_product' => $quantity_product,
             'poid' => $poid,
-            'price' => $prix/* ,
-            'totalLivraison' => $totalLivraison */
+            'price' => $prix,
+            'totalLivraison' => $totalLivraison ?: null,
         ]);
     }
     
@@ -94,9 +92,9 @@ class AccountOrderController extends AbstractController
         $weight = $weight->findAll();
 
         foreach($weight as $item){
-           // $priceList[$item->getKg()]=$item->getPrice();
-           $priceList[(string) $item->getKg()]=((string) $item->getPrice());
+           $priceList[(string) $item->getKg()]=$item->getPrice();
         }  
+
         return $priceList;         
          //dd( (double) ($priceList["0.75"]));
     }

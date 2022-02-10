@@ -45,9 +45,9 @@
     </table>
 
     <div class="text-right" style="margin-right:30px;">
-    <strong>Nombre de produits :</strong> {{ (quantity_product) }}</br>
+    {# <strong>Nombre de produits :</strong> {{ (quantity_product) }}</br> #}
     <strong>Sous-total : </strong>{{ (order.getTotal / 100)|number_format(2, ',', '.') }} €</br>
-    <strong>Prix livraison : </strong>{{ (poid)|number_format(2, ',','.') }} kg = {{ (price)|number_format(2, ',','.') }} €</br>
+    <strong>Prix livraison : </strong>{{ (order.carrierPrice)|number_format(2, ',','.') }} €</br>
     <strong>Total : </strong>{{ ((prix_total_article / 100 ) + price)|number_format(2, ',', '.') }} €</br>
     </div>
 {% endblock %}
