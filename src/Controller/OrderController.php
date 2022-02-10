@@ -68,25 +68,18 @@ class OrderController extends AbstractController
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
             $qantity_product+=$element['quantity'];
 
-            /* foreach ($cart->getFull() as $element) {
-                $prix_total_article = $element['product']->getPrice() * $element['quantity'];
-            }
-            dd($prix_total_article); */
-
             $poid+=$poidAndQantity;
         }
 
         $prix=$weight->findByKgPrice($poid)->getPrice();
 
         $priceList=$this->fillPriceList($weight);
-        /* $totalLivraison=$priceList[$poid]; */
 
             $form->handleRequest($request); /* Pour dire au formulaire : écoute la requête s'il te plait. */
 
             if ($form->isSubmitted() && $form->isValid()) {
                 //dd($form->getData());
                 
-
                 $date = new DateTime();
                 /* $carriers = $form->get('carriers')->getData(); */
                 $delivery = $form->get('addresses')->getData();
@@ -108,9 +101,6 @@ class OrderController extends AbstractController
                     $order->setUser($this->getUser());
                     $order->setCreatedAt($date);
                     $order->setCarrierPrice($prix);
-                    /* foreach ($cart->getFull() as $element) {
-                        $order->setTotalPrice( (($element['product']->getPrice() * $element['quantity']) + (3)) );
-                    } */
                     $order->setDelivery($delivery_content);
                     $order->SetState(0);
 
@@ -128,45 +118,7 @@ class OrderController extends AbstractController
                     $orderDetails->setTotal($element['product']->getPrice() * $element['quantity']);
                     
                     $this->entityManager->persist($orderDetails);
-
-/*                     $id=$element['product']->getId();
-                    $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
-                    $getProductStockById = $repo[0]->getStock();
-
-                    $getProductQtyCart =$element['quantity'];
-                    $result = $getProductStockById - $getProductQtyCart;
-                    $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
-                    $query =  $this->entityManager->createQuery($dql);
-                    $query->execute(); */
-
                 }   
-
-                /* $id=5;
-                // tu as dans le panier cette quantité
-                $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
-                $getProductStockById = $repo[0]->getStock();
-
-               // dd($getProductStockById[0]->getStock());
-
-               // todo tu requpére la quantité depuis la cart et tu le met dans la variable getProductQtyCart
-                $getProductQtyCart = 2;
-                $result = $getProductStockById - $getProductQtyCart;
-
-                $dql = "update App\Entity\Product p SET p.stock='{$result}'  WHERE p.id = '{$id}'";
-                $query =  $this->entityManager->createQuery($dql);
-                $query->execute(); */
-
-
-                /* $queryBuilder = $this->entityManager->createQueryBuilder();
-                $query = $queryBuilder->update('product', 'p')
-                        ->set('p.stock', ':stock')
-                        ->where('p.id = :id')
-                        ->setParameter('stock', 3)
-                        ->setParameter('id', 5)
-                        ->getQuery();
-                        dd($query->execute());
-                $result = $query->execute(); */
-                /* UPDATE product p SET p.stock = :stock WHERE p.id = :id */
 
                 $this->entityManager->flush();
 
