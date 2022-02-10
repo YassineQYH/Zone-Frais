@@ -63,22 +63,23 @@
                       </p>
 
 
-{# {{dump((cart.get('data')) is empty )}}
+                  {# {{dump((cart.get('data')) is empty )}}
 
+                  {% if cart.get('data') is empty %}
+                      the array is empty
+                  {% endif %} #}
+                  {# {% for key in cart.get('data') is empty %} #}
 
-{% if cart.get('data') is empty %}
-    the array is empty
-{% endif %} #}
-
+                  {# {{dump(getType(cart))}} #} {# Pour connaitre le type grace au fichier // src/Twig/GetTypeExtension.php #}
                       {% if (product.stock < 1) %}
                         <a class="buy-btn">Bientôt de retour</a>
 
-                      {% elseif (cart.get('data') is empty ) %}
-                        <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
-                          Ajouter
-                        </a> <br> 
-
-                      {% elseif cart.get('data')[product.id] < product.stock %}
+                      {# Si le product.id n'est pas dans le cart #}
+                      {% elseif (cart.get('data') is empty) or id not in (cart.get('data')|keys) %}
+                          <a href="{{ path('add_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
+                            Ajouter
+                          </a> <br> 
+                      {% elseif (cart.get('data')[product.id] < product.stock) or id not in (cart.get('data')|keys) %}
                         <a class="buy-btn">Quantité : {{cart.get('data')[product.id]}} </a><br>
                         <a href="{{ path('decrease_to_cart', {'id' : item.product.id }) }}" class="buy-btn">
                           Diminué
@@ -93,7 +94,7 @@
                         </a> <br> 
                         <a class="buy-btn" style="color:red;">Max(rupture) </a>
                       {% endif %} <br>
-                      
+                  {# {% endfor %} #}
 
                       {# {% for item in cart.full %}
                         

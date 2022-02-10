@@ -14,16 +14,21 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryAccessoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductController extends AbstractController
 {
     private $entityManager;
     private $repository;
+    private $session;
 
-    public function __construct(EntityManagerInterface $entityManager,ProductRepository $repository)
+
+    public function __construct(EntityManagerInterface $entityManager,ProductRepository $repository, SessionInterface $session)
     {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
+        $this->session = $session;
+
     }
 
     
@@ -52,19 +57,22 @@ class ProductController extends AbstractController
     */
     public function show($slug, Product $product, CategoryRepository $category)
     {
+        $cart = $this->session->get('cart');
+        //dd($cart);
         $categories = $category->findAll();
         $categoryProduits = $this->entityManager->getRepository(Category::class)->findAll();
 
         $illustrations = $this->entityManager->getRepository(Illustration::class)->findByProduct($product);
 
         $product = $this->entityManager->getRepository(Product::class)->findOneBySlug($slug);
-
+        //dd($product->getId());
         if (!$product){
             return $this->redirectToRoute('products');
         }
 
         return $this->render('produits/show.html.twig', [
             'product' => $product,
+            'id' => $product->getId(),
             'illustrations' => $illustrations,
             'categories' => $categories,
             'categoryProduits' => $categoryProduits,
