@@ -45,8 +45,20 @@ nav ul {
     padding: 0px;
 }
 
-nav ul li a {
+.menu-li a {
     height: 40px;
+    line-height: 43px;
+    margin: 8px;
+    padding: 0px 22px;
+    display: flex;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: 1px;
+}
+.lien-cart nav ul li a {
+    height: 10px;
     line-height: 43px;
     margin: 8px;
     padding: 0px 22px;
@@ -59,6 +71,24 @@ nav ul li a {
 }
 
 nav ul li a:hover {
+    background-color: var(--vert-menu);
+    /* background-color: #5a76fd; */
+    color: #fff;
+    box-shadow: 5px 10px 30px rgba(90, 118, 253, 0.5);
+    transition: all ease 0.2s;
+    border-radius: 5%;
+}
+
+.menu-li-cart a:hover {
+    background-color: transparent;
+    /* background-color: #5a76fd; */
+    color: #fff;
+    box-shadow: 5px 10px 30px rgba(90, 118, 253, 0.5);
+    transition: all ease 0.2s;
+    border-radius: 5%;
+}
+
+.lien-cart nav ul li a:hover {
     background-color: var(--vert-menu);
     /* background-color: #5a76fd; */
     color: #fff;
@@ -80,7 +110,7 @@ nav .menu-btn {
     border-radius: 5%;
 }
 
-.menu-nav ul li {
+.menu-nav .menu-li {
     position: relative;
 }
 
@@ -148,7 +178,7 @@ nav .menu li a {
         border-bottom: 4px solid #5a76fd;
         width: 100%;
     }
-    .men u li {
+    .menu u li {
         width: 100%;
     }
     nav .menu li a {
@@ -159,7 +189,32 @@ nav .menu li a {
         margin: 0px;
         padding: 25px;
         border: 1px solid rgba(38, 38, 38, 0.03);
+        color: #000;
     }
+    .menu-li-cart a:hover {
+        background-color: var(--vert-menu);
+        /* background-color: #5a76fd; */
+        color: white;
+        box-shadow: 5px 10px 30px rgba(90, 118, 253, 0.5);
+        transition: all ease 0.2s;
+        border-radius: 5%;
+    }
+    /* .menu-nav .menu-li-cart {
+        position: relative;
+    } */
+    .menu-li-cart a {
+        height: 40px;
+        line-height: 43px;
+        margin: 8px;
+        padding: 0px 22px;
+        display: flex;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        font-weight: 400;
+        color: var(--white);
+        letter-spacing: 1px;
+    }
+
     nav .menu-icon {
         cursor: pointer;
         float: right;

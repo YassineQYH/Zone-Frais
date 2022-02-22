@@ -5,6 +5,8 @@
     border-bottom: 1px solid #495057;
     padding-bottom: 0.5em;
     margin-bottom: 0.5em;
+    /* font-size: 1.1rem; */
+    /* background-color: yellowgreen; */
   }
   .navbar-cart-product-link {
     color: #343a40;
@@ -41,3 +43,10 @@
     padding-left: 20px;
   }
   
+  .titre-article-panier {
+    background-color: #343a40;
+    color: white;
+  }
+  .titre-article-panier p{
+    color: white;
+  }

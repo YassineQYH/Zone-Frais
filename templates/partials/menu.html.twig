@@ -14,8 +14,8 @@
         </label>
         <!--menu-->
         <ul class="menu">
-            <li><a href="/">Accueil</a></li>
-            <li><a href="#">Produits <span><i class="fas fa-chevron-down"> </i></a>
+            <li class="menu-li"><a href="/">Accueil</a></li>
+            <li class="menu-li"><a href="#">Produits <span><i class="fas fa-chevron-down"> </i></a>
                 <div class="dropdown-menu-right">
                     <!--sub-menu-->
                     <ul class="sous-menu-nom">
@@ -27,26 +27,26 @@
                 </div>
             </li>
 
-            <li><a href="/#contact">Contact</a></li>
+            <li class="menu-li"><a href="/#contact">Contact</a></li>
 
-            <li>
+            <li class="menu-li-cart">
                 {% block widget %}
                     {{ include('partials/cart.html.twig') }}
                 {% endblock %}
             </li>
 
-            {# <li>
-                <a href="#">€ :
-                {% for item in cart %}
+            <li style="color:white;">
+                {% set total = null %}
+                    {% for item in cart %}
+                        {% set total = total + (item.product.price * item.quantity) %}
+                    {% endfor %} 
                     <small >
-                        Prix total :  <strong>{{ ((item.product.price * item.quantity) / 100)|number_format(2, ',','.') }} € </strong>
+                        <strong>{{ (total / 100)|number_format(2, ',','.') }} € </strong>
                     </small>
-                {% endfor %} 
-                </a>
-            </li> #}
+            </li>
                 
 
-            <li><a href="#"><i class="far fa-user bouton-header"></i><i class="fas fa-chevron-down"></i></a>
+            <li class="menu-li"><a href="#"><i class="far fa-user bouton-header"></i><i class="fas fa-chevron-down"></i></a>
                 <div class="dropdown-menu-right">
                     <!--sub-menu-->	
                     {% if is_granted('ROLE_ADMIN') %}

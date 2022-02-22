@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -36,6 +37,7 @@ class ProductCrudController extends AbstractCrudController
                                     ->setUploadedFileNamePattern('[name].[extension]')
                                     ->setFormTypeOptions(['required' => false]),
             MoneyField::new('price')->setCurrency('EUR'),
+            IntegerField::new('stock'),
             BooleanField::new('isBest'),
             /* ImageField::new('illustration')->setBasePath('uploads/')
                                             ->setUploadDir('public/uploads')

@@ -19,10 +19,14 @@ body {
   background-color: #fff;
   color: #222;
 }
-nav ul li a {
+.menu-li a {
     font-size: 1.4rem;
+    /* display: flex; */
 }
-
+.sous-menu-nom a {
+    font-size: 10px;
+    font-weight: bold;
+}
 h1 {
     font-weight: 500;
 }
