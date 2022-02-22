@@ -67,7 +67,7 @@ class HomeController extends AbstractController
             'products' => $products,
             'categorys' => $categorys,
             'form' => $form->createView(),
-            'cart' => $cart,
+            'cart' => $cart
         ]);
     }
 }

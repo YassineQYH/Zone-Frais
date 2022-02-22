@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Form\ChangePasswordType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,8 +23,10 @@ class AccountPasswordController extends AbstractController
     /**
      * @Route("/compte/modifier-mon-mot-de-passe", name="account_password")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $cart)
     {
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
 
         $notification = null;
@@ -52,7 +55,8 @@ class AccountPasswordController extends AbstractController
         return $this->render('account/password.html.twig', [
             'form' => $form->createView(),
             'notification' => $notification,
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 }

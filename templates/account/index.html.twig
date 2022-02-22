@@ -2,7 +2,7 @@
 
 {% block title %}Mon compte : Zone-Frais{% endblock %}
 
-{% block content %}
+{% block content %} <br><br><br><br><br><br><br>
     <div class="container">
         <h1>Mon compte</h1>
 
@@ -18,19 +18,19 @@
             <div class="col-md-4">
                 <div class="account-item text-center">
                 <img src="{{ asset('assets/img/password.png') }}" alt="Modifier mon mot de passe"></br>
-                    <a href="{{ path('account_password') }}">Modifier mon mot de passe</a>
+                    <a style="color:blue;" href="{{ path('account_password') }}">Modifier mon mot de passe</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="account-item text-center">
                 <img src="{{ asset('assets/img/home.png') }}" alt="Gérer mes adresses"></br>
-                    <a href="{{ path('account_address') }}">Gérer mes adresses</a>
+                    <a style="color:blue;" href="{{ path('account_address') }}">Gérer mes adresses</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="account-item text-center">
                 <img src="{{ asset('assets/img/product.png') }}" alt="Mes commandes"></br>
-                    <a href="{{ path('account_order') }}">Mes commandes</a>
+                    <a style="color:blue;" href="{{ path('account_order') }}">Mes commandes</a>
                 </div>
             </div>
         </div>

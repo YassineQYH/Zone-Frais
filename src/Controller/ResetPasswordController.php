@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\ResetPassword;
 use App\Entity\User;
@@ -26,9 +27,10 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/mot-de-passe-oublie", name="reset_password")
      */
-    public function index(Request $request, CategoryRepository $category)
+    public function index(Request $request, CategoryRepository $category, Cart $cart)
     {
-        
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
 
         if ($this->getUser()) {
@@ -65,15 +67,18 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 
     /**
      * @Route("/modifier-mon-mot-de-passe/{token}", name="update_password")
      */
-    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder, CategoryRepository $category)
+    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $cart)
     {
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
 
         $reset_password = $this->entityManager->getRepository(ResetPassword::class)->findOneByToken($token);
@@ -112,7 +117,8 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/update.html.twig', [
             'form' => $form->createView(),
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 }

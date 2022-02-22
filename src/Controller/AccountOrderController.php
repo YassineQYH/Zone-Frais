@@ -25,6 +25,7 @@ class AccountOrderController extends AbstractController
      */
     public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
     {
+        $cart=$cart->getFull();
         
         $categories = $category->findAll();
 
@@ -46,7 +47,8 @@ class AccountOrderController extends AbstractController
             'categories' => $categories,
             'poid' => $poid,
             'price' => $prix,
-            'quantity_product' => $quantity_product
+            'quantity_product' => $quantity_product,
+            'cart' => $cart
         ]);
     }
 
@@ -84,6 +86,7 @@ class AccountOrderController extends AbstractController
             'poid' => $poid,
             'price' => $prix,
             'totalLivraison' => $totalLivraison ?: null,
+            'cart' => $cart
         ]);
     }
     

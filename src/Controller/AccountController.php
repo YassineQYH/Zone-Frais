@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +13,15 @@ class AccountController extends AbstractController
     /**
      * @Route("/compte", name="account")
      */
-    public function index(CategoryRepository $category): Response
+    public function index(CategoryRepository $category, Cart $cart): Response
     {
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
         
         return $this->render('account/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Category;
 use App\Entity\User;
@@ -32,8 +33,11 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion", name="app_login")
      */
-    public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder): Response
+    public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder, Cart $cart): Response
     {
+        /* Pour afficher les infos dans le widget panier */
+        $cart=$cart->getFull();
+
         /* Pour la nav */
         $categories = $category->findAll();
         
@@ -105,7 +109,8 @@ class SecurityController extends AbstractController
             'error' => $error,
             'categories' => $categories,
             'form' => $form->createView(),
-            'notification' => $notification/* ,
+            'notification' => $notification,
+            'cart' => $cart/* ,
             'form1' => $form1->createView(),
             'form2' => $form2->createView() */
         ]);

@@ -24,12 +24,15 @@ class AccountAddressController extends AbstractController
     /**
      * @Route("/compte/adresses", name="account_address")
      */
-    public function index(CategoryRepository $category)
+    public function index(CategoryRepository $category, Cart $cart)
     {
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
         //dd($this->getUser());
         return $this->render('account/address.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 
@@ -38,6 +41,8 @@ class AccountAddressController extends AbstractController
      */
     public function add(Cart $cart, Request $request, CategoryRepository $category)
     {
+        $cart=$cart->getFull();
+
         //dd($this->getUser());
         $categories = $category->findAll();
         $address = new Address();
@@ -58,15 +63,18 @@ class AccountAddressController extends AbstractController
 
         return $this->render('account/address_form.html.twig', [
             'form' => $form->createView(),
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 
     /**
      * @Route("/compte/modifier-une-adresse/{id}", name="account_address_edit")
      */
-    public function edit(Request $request, $id, CategoryRepository $category)
+    public function edit(Request $request, $id, CategoryRepository $category, Cart $cart)
     {
+        $cart=$cart->getFull();
+
         $categories = $category->findAll();
         $address = $this->entityManager->getRepository(Address::class)->findOneById($id);
 
@@ -85,7 +93,8 @@ class AccountAddressController extends AbstractController
 
         return $this->render('account/address_form.html.twig', [
             'form' => $form->createView(),
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $cart
         ]);
     }
 
