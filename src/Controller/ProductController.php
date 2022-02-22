@@ -58,10 +58,10 @@ class ProductController extends AbstractController
     /**
     * @Route("/produit/{slug}", name="produit")
     */
-    public function show($slug, Product $product, CategoryRepository $category, Cart $cart)
+    public function show($slug, Product $product, CategoryRepository $category, /* Cart $panier */)
     {
-        $cart=$cart->getFull();
-        $panier = $this->session->get('cart');
+        /* $panier=$panier->getFull(); */
+        $cart = $this->session->get('cart');
         //dd($cart);
         $categories = $category->findAll();
         $categoryProduits = $this->entityManager->getRepository(Category::class)->findAll();
@@ -80,7 +80,7 @@ class ProductController extends AbstractController
             'illustrations' => $illustrations,
             'categories' => $categories,
             'categoryProduits' => $categoryProduits,
-            'cart' => $cart
+            /* 'panier' => $panier */
         ]);
     }
 
