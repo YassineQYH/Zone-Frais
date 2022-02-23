@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
@@ -25,8 +26,10 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils, Cart $cart)
     {
+        $cart=$cart->getFull();
+        
         /* Pour la nav */
         $categories = $category->findAll();
         
@@ -78,6 +81,7 @@ class RegisterController extends AbstractController
             'categories' => $categories,
             'last_username' => $lastUsername, 
             'error' => $error,
+            'cart' => $cart
         ]);
     }
 }

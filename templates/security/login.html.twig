@@ -123,25 +123,12 @@
                             <h2>Tu fais déjà parti des nôtres ?</h2>
                             <p>Si vous avez déjà un compte, ouvrez une session. Vous nous avez manqué!</p>
                             </div>
-                            <div class="img-btn">
-                                <span class="m-up">S'inscrire</span>
-                                <span class="m-in">Se Connecter</span>
-                            </div>
+                            <a href="/inscription">
+                                <div class="img-btn">
+                                    <span class="m-up">S'inscrire</span> 
+                                </div>
+                            </a>
                         </div>
-                        <div class="form sign-up">
-                            <h2>S'enregistrer</h2>
-                            {{ form_start(form) }}
-                            {{ form_row(form.firstname) }}
-                            {{ form_row(form.lastname) }}
-                            {{ form_row(form.email) }}
-                            {{ form_row(form.password) }}
-                            <span class="show-password" style="margin-top: -135px!important;">Afficher</span>
-                            <span class="show-password-retype" style="margin-top: -43px!important;margin-right:300px!important;">Afficher</span>
-
-                            {{ form_row(form.submit) }}
-                            {{ form_end(form) }} 
-                        </div>
-                    </div>
                 </form>
             {% endif %}
         </div>
