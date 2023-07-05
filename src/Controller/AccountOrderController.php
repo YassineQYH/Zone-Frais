@@ -55,7 +55,7 @@ class AccountOrderController extends AbstractController
     /**
      * @Route("/compte/mes-commandes/{reference}", name="account_order_show")
      */
-    public function show($reference, CategoryRepository $category, WeightRepository $weight, Cart $cart)
+    public function show($reference, CategoryRepository $category, WeightRepository $weight, Cart $panier)
     {
         $categories = $category->findAll();
         $order = $this->entityManager->getRepository(Order::class)->findOneByReference($reference);
@@ -64,9 +64,9 @@ class AccountOrderController extends AbstractController
         (double) $price = $totalPrixLivraison = $quantity_product = null ;
         
 
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
-        foreach($cart as $element){
+        foreach($panier as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
             $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
@@ -86,7 +86,7 @@ class AccountOrderController extends AbstractController
             'poid' => $poid,
             'price' => $prix,
             'totalLivraison' => $totalLivraison ?: null,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
     
