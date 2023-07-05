@@ -24,11 +24,11 @@ class OrderSuccessController extends AbstractController
     /**
      * @Route("/commande/merci/{stripeSessionId}", name="order_validate")
      */
-    public function index(Cart $cart, $stripeSessionId, CategoryRepository $category)
+    public function index(Cart $panier, $stripeSessionId, CategoryRepository $category)
     {
 
         /* Gestion automatique du stock */
-        foreach ($cart->getFull() as $element) {
+        foreach ($panier->getFull() as $element) {
 
             $id=$element['product']->getId();
             $repo = $this->entityManager->getRepository(Product::class)->findBy(['id' => $id]);
@@ -50,7 +50,7 @@ class OrderSuccessController extends AbstractController
 
         if ($order->getState() == 0 ) {
             // Vider la session "cart" après le paiement
-            $cart->remove();
+            $panier->remove();
 
             // Modifier le statut isPaid de notre commande en mettant 1
             $order->setState(1);
@@ -74,6 +74,7 @@ class OrderSuccessController extends AbstractController
         return $this->render('order_success/index.html.twig', [
             'order' => $order,
             'categories' => $categories,
+            'panier' => $panier,
         ]);
     }
 }

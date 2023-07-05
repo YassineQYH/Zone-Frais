@@ -85,11 +85,11 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/add/{id}", name="add_to_cart" , methods={"GET","POST"})
      */
-    public function add(Cart $cart, $id,Product $product ,Request $request)
+    public function add(Cart $panier, $id,Product $product ,Request $request)
     {   
         //dd($request->request);
         // $notification = 'Votre produit à bien été ajouté au panier';
-        $cart->add($id);
+        $panier->add($id);
         
         // return $this->redirectToRoute('cart');
         //dd($_SERVER['HTTP_REFERER']);
@@ -103,18 +103,18 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/remove", name="remove_my_cart")
      */
-    public function remove(Cart $cart)
+    public function remove(Cart $panier)
     {
-        $cart->remove();
+        $panier->remove();
         return $this->redirectToRoute('products');
     }
 
     /**
      * @Route("/cart/delete/{id}", name="delete_to_cart")
      */
-    public function delete(Cart $cart, $id)
+    public function delete(Cart $panier, $id)
     {
-        $cart->delete($id);
+        $panier->delete($id);
 
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }
@@ -122,18 +122,18 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/decrease/{id}", name="decrease_to_cart")
      */
-    public function decrease(Cart $cart, $id)
+    public function decrease(Cart $panier, $id)
     {
-        $cart->decrease($id);
+        $panier->decrease($id);
 
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }
     /**
      * @Route("/cart/increase/{id}", name="increase_to_cart")
      */
-    public function increase(Cart $cart, $id)
+    public function increase(Cart $panier, $id)
     {
-        $cart->add($id);
+        $panier->add($id);
 
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }

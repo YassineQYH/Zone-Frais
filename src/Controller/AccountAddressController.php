@@ -24,24 +24,24 @@ class AccountAddressController extends AbstractController
     /**
      * @Route("/compte/adresses", name="account_address")
      */
-    public function index(CategoryRepository $category, Cart $cart)
+    public function index(CategoryRepository $category, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
         //dd($this->getUser());
         return $this->render('account/address.html.twig', [
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 
     /**
      * @Route("/compte/ajouter-une-adresse", name="account_address_add")
      */
-    public function add(Cart $cart, Request $request, CategoryRepository $category)
+    public function add(Cart $panier, Request $request, CategoryRepository $category)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         //dd($this->getUser());
         $categories = $category->findAll();
@@ -54,7 +54,7 @@ class AccountAddressController extends AbstractController
             $address->setUser($this->getUser());
             $this->entityManager->persist($address);
             $this->entityManager->flush();
-            if ($cart->get()) { /* Si j'ai quelque chose dans mon panier tu me redirige vers ma commande */
+            if ($panier->get()) { /* Si j'ai quelque chose dans mon panier tu me redirige vers ma commande */
                 return $this->redirectToRoute('order');
             } else {
                 return $this->redirectToRoute('account_address');
@@ -64,16 +64,16 @@ class AccountAddressController extends AbstractController
         return $this->render('account/address_form.html.twig', [
             'form' => $form->createView(),
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 
     /**
      * @Route("/compte/modifier-une-adresse/{id}", name="account_address_edit")
      */
-    public function edit(Request $request, $id, CategoryRepository $category, Cart $cart)
+    public function edit(Request $request, $id, CategoryRepository $category, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
         $address = $this->entityManager->getRepository(Address::class)->findOneById($id);
@@ -94,7 +94,7 @@ class AccountAddressController extends AbstractController
         return $this->render('account/address_form.html.twig', [
             'form' => $form->createView(),
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 

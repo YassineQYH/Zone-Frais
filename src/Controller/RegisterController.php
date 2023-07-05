@@ -26,9 +26,9 @@ class RegisterController extends AbstractController
     /**
      * @Route("/inscription", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils, Cart $cart)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, AuthenticationUtils $authenticationUtils, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
         
         /* Pour la nav */
         $categories = $category->findAll();
@@ -81,7 +81,7 @@ class RegisterController extends AbstractController
             'categories' => $categories,
             'last_username' => $lastUsername, 
             'error' => $error,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }

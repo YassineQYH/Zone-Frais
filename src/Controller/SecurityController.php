@@ -33,10 +33,10 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion", name="app_login")
      */
-    public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder, Cart $cart): Response
+    public function login(Request $request, CategoryRepository $category, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder, Cart $panier): Response
     {
         /* Pour afficher les infos dans le widget panier */
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         /* Pour la nav */
         $categories = $category->findAll();
@@ -110,7 +110,7 @@ class SecurityController extends AbstractController
             'categories' => $categories,
             'form' => $form->createView(),
             'notification' => $notification,
-            'cart' => $cart/* ,
+            'panier' => $panier/* ,
             'form1' => $form1->createView(),
             'form2' => $form2->createView() */
         ]);

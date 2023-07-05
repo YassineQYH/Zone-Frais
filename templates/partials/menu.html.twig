@@ -37,7 +37,7 @@
 
             <li style="color:white;">
                 {% set total = null %}
-                    {% for item in cart %}
+                    {% for item in panier %}
                         {% set total = total + (item.product.price * item.quantity) %}
                     {% endfor %} 
                     <small >

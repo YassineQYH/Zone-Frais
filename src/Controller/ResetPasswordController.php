@@ -27,9 +27,9 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/mot-de-passe-oublie", name="reset_password")
      */
-    public function index(Request $request, CategoryRepository $category, Cart $cart)
+    public function index(Request $request, CategoryRepository $category, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
 
@@ -68,16 +68,16 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/index.html.twig', [
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 
     /**
      * @Route("/modifier-mon-mot-de-passe/{token}", name="update_password")
      */
-    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $cart)
+    public function update(Request $request, $token, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
 
@@ -118,7 +118,7 @@ class ResetPasswordController extends AbstractController
         return $this->render('reset_password/update.html.twig', [
             'form' => $form->createView(),
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }

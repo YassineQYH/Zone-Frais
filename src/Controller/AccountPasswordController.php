@@ -23,9 +23,9 @@ class AccountPasswordController extends AbstractController
     /**
      * @Route("/compte/modifier-mon-mot-de-passe", name="account_password")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $cart)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, CategoryRepository $category, Cart $panier)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
 
@@ -56,7 +56,7 @@ class AccountPasswordController extends AbstractController
             'form' => $form->createView(),
             'notification' => $notification,
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }

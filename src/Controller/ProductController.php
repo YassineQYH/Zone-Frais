@@ -35,9 +35,9 @@ class ProductController extends AbstractController
     /**
     * @Route("/nos-produits", name="produits")
     */
-    public function index(Request $request, CategoryRepository $category, Cart $cart, PaginatorInterface $paginator)
+    public function index(Request $request, CategoryRepository $category, Cart $panier, PaginatorInterface $paginator)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $articles = $this->entityManager->getRepository(Product::class)->findAll();
             $products = $paginator->paginate(
@@ -50,7 +50,7 @@ class ProductController extends AbstractController
         return $this->render('produits/index.html.twig', [
             'products' => $products,
             'categories' => $categories,
-            'cart' => $cart,
+            'panier' => $panier,
         ]);
     }
 
@@ -58,10 +58,11 @@ class ProductController extends AbstractController
     /**
     * @Route("/produit/{slug}", name="produit")
     */
-    public function show($slug, Product $product, CategoryRepository $category, /* Cart $panier */)
+    public function show($slug, Product $product, CategoryRepository $category, Cart $panier)
     {
-        /* $panier=$panier->getFull(); */
-        $cart = $this->session->get('cart');
+        $panier=$panier->getFull();
+        /* $cart = $this->session->get('cart'); */
+        
         //dd($cart);
         $categories = $category->findAll();
         $categoryProduits = $this->entityManager->getRepository(Category::class)->findAll();
@@ -80,17 +81,18 @@ class ProductController extends AbstractController
             'illustrations' => $illustrations,
             'categories' => $categories,
             'categoryProduits' => $categoryProduits,
-            /* 'panier' => $panier */
+            /* 'cart' => $cart, */
+            'panier' => $panier
         ]);
     }
 
     /**
     * @Route("/nos-produits/categorie-{categoryProduit}", name="categorie")
     */
-    public function choixCategory(Category $categoryProduit, CategoryRepository $category, PaginatorInterface $paginator, Request $request, Cart $cart)
+    public function choixCategory(Category $categoryProduit, CategoryRepository $category, PaginatorInterface $paginator, Request $request, Cart $panier)
     {
 
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         {
             $articles = $this->entityManager->getRepository(Product::class)->findAllOrderByCategory($categoryProduit);
@@ -105,7 +107,7 @@ class ProductController extends AbstractController
         return $this->render('produits/category.html.twig', [
             'products' => $products,
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }

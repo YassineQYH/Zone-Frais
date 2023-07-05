@@ -30,7 +30,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande", name="order")
      */
-    public function index(Cart $cart, Request $request, CategoryRepository $category)
+    public function index(Cart $panier, Request $request, CategoryRepository $category)
     {
         $categories = $category->findAll();
 
@@ -45,7 +45,7 @@ class OrderController extends AbstractController
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
-            'cart' => $cart->getFull(),
+            'panier' => $panier->getFull(),
             'categories' => $categories
         ]);
     }

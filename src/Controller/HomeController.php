@@ -28,9 +28,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, CategoryRepository $category, Cart $cart)
+    public function index(Request $request, CategoryRepository $category, Cart $panier)
     {        
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $form = $this->createForm(ContactType::class);
         
@@ -67,7 +67,7 @@ class HomeController extends AbstractController
             'products' => $products,
             'categorys' => $categorys,
             'form' => $form->createView(),
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }

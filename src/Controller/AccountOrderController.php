@@ -23,9 +23,9 @@ class AccountOrderController extends AbstractController
     /**
      * @Route("/compte/mes-commandes", name="account_order")
      */
-    public function index(Cart $cart, CategoryRepository $category, WeightRepository $weight)
+    public function index(Cart $panier, CategoryRepository $category, WeightRepository $weight)
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
         
         $categories = $category->findAll();
 
@@ -34,7 +34,7 @@ class AccountOrderController extends AbstractController
         (double) $poid = $totalLivraison = $quantity_product = null ;
         (double) $price = $totalPrixLivraison = $quantity_product = null ;
 
-        foreach($cart as $element){
+        foreach($panier as $element){
             $poidAndQantity=$element['product']->getWeight()->getKg() * $element['quantity'];
             $quantity_product+=$element['quantity'];
             $poid+=$poidAndQantity;
@@ -48,7 +48,7 @@ class AccountOrderController extends AbstractController
             'poid' => $poid,
             'price' => $prix,
             'quantity_product' => $quantity_product,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 

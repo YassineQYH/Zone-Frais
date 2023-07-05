@@ -13,15 +13,15 @@ class AccountController extends AbstractController
     /**
      * @Route("/compte", name="account")
      */
-    public function index(CategoryRepository $category, Cart $cart): Response
+    public function index(CategoryRepository $category, Cart $panier): Response
     {
-        $cart=$cart->getFull();
+        $panier=$panier->getFull();
 
         $categories = $category->findAll();
         
         return $this->render('account/index.html.twig', [
             'categories' => $categories,
-            'cart' => $cart
+            'panier' => $panier
         ]);
     }
 }
